@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SignUp</h2>
+
+@if(ViewBag.Message != null)
+{
+    <h5 class="alert-info">@ViewBag.Message</h5>
+}
+
+@using (Html.BeginForm("SignUp", "Register", FormMethod.Post))
+{
+    @Html.Label("Username");
+    @Html.TextBox("Username");
+
+    @Html.Label("Password");
+    @Html.TextBox("Password");
+
+    @Html.Label("PasswordConfirm");
+    @Html.TextBox("PasswordConfirm");
+
+    @Html.Label("Nickname");
+    @Html.TextBox("Nickname");
+
+    <input type="submit" class="btn btn-primary"/>
+}
+
+<script>
+    document.getElementById("Username").focus();
+</script>

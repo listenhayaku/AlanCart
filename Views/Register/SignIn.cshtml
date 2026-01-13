@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "SignIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SignIn</h2>
+
+@if(ViewBag.Message != null)
+{
+    <h1 class="info" style="color: red;">@ViewBag.Message</h1>
+}
+
+@using (Html.BeginForm("SignIn", "Register", FormMethod.Post))
+{
+    @Html.Label("Username")
+    @Html.TextBox("Username")
+    @Html.Label("Password")
+    @Html.TextBox("Password")
+
+    <input type="submit" class="btn btn-primary"/>
+}
+
+
+<script>
+    document.getElementById("Username").focus();
+</script>
