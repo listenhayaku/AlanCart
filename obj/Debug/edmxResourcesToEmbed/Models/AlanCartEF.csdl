@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AlanCartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="AlanCartEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="UserData" EntityType="AlanCartModel.UserData" />
+    <EntitySet Name="ProductData" EntityType="AlanCartModel.ProductData" />
+    <EntitySet Name="CartOfUser" EntityType="AlanCartModel.CartOfUser" />
+  </EntityContainer>
+  <EntityType Name="UserData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" />
+    <Property Name="Nickname" Type="String" Nullable="false" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Productname" Type="String" Nullable="false" />
+    <Property Name="Stock" Type="Int32" Nullable="false" />
+    <Property Name="Available" Type="Int32" Nullable="false" />
+    <Property Name="ImgUrl" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CartOfUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="String" Nullable="false" />
+    <Property Name="Stock" Type="String" Nullable="false" />
+    <Property Name="Chekcout" Type="String" Nullable="false" />
+  </EntityType>
+</Schema>

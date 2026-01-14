@@ -39,5 +39,16 @@ namespace AlanCart.Models
                 }
             }
         }
+        public bool UpdatePassword()
+        {
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                Models.UserData ud = (from s in db.UserData where s.Username == this.Username select s).FirstOrDefault();
+                if (ud == default(Models.UserData)) return false;
+                ud.Password = Services.Security.HashPassword(this.Password);
+                db.SaveChanges();
+                return true;
+            }
+        }
     }
 }

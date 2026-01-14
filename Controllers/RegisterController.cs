@@ -68,7 +68,7 @@ namespace AlanCart.Controllers
         public ActionResult UpdatePassword(Models.UserData ud)
         {
             ud.Username = Session["Username"].ToString();
-            if (Services.Security.UpdatePassword(ud.Username, ud.Password))
+            if (ud.UpdatePassword())
             {
                 TempData["Message"] = "Successful";
                 return RedirectToAction("Index", "Home");

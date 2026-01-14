@@ -11,7 +11,7 @@ namespace AlanCart.Controllers
         public ActionResult Index()
         {
             if (Session["Username"] == null) return RedirectToAction("SignIn", "Register");
-            else return View();
+            else return RedirectToAction("Index","Products");
         }
 
         public ActionResult About()

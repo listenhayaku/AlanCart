@@ -1,0 +1,31 @@
+﻿@using AlanCart.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+@foreach(ProductData pd in Model)
+{
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <img src="@pd.ImgUrl" alt="Alternate Text" />
+                </td>
+            </tr>
+            <tr><td>@pd.Productname</td></tr>
+            <tr><td>@pd.Stock</td></tr>
+            <tr>
+                <td>
+                    <button>-</button>
+                    <input type="text" name="name" value="" />
+                    <button>+</button>
+                    <button>add to cart</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

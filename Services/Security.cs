@@ -58,17 +58,5 @@ namespace AlanCart.Services
                 return diff == 0;
             }
         }
-
-        public static bool UpdatePassword(string username,string password)  //把這個移到UserData裡面
-        {
-            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
-            {
-                Models.UserData ud = (from s in db.UserData where s.Username == username select s).FirstOrDefault();
-                if (ud == default(Models.UserData)) return false;
-                ud.Password = HashPassword(password);
-                db.SaveChanges();
-                return true;
-            }
-        }
     }
 }

@@ -35,6 +35,7 @@
                 else
                 {
                     <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
                         <li>@Html.ActionLink("UpdatePassword", "UpdatePassword", "Register")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Register")</li>
                         <li style="color:white;">歡迎，@Session["Username"]</li>

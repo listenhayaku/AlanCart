@@ -12,12 +12,12 @@ namespace AlanCart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserData
+    public partial class CartOfUser
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Nickname { get; set; }
-        public int Role { get; set; }
+        public int UserId { get; set; }
+        public string ProductId { get; set; }
+        public string Stock { get; set; }
+        public string Chekcout { get; set; }
     }
 }

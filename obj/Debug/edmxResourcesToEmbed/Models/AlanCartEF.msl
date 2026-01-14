@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AlanCartModelStoreContainer" CdmEntityContainer="AlanCartEntities">
+    <EntitySetMapping Name="UserData">
+      <EntityTypeMapping TypeName="IsTypeOf(AlanCartModel.UserData)">
+        <MappingFragment StoreEntitySet="UserData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductData">
+      <EntityTypeMapping TypeName="IsTypeOf(AlanCartModel.ProductData)">
+        <MappingFragment StoreEntitySet="ProductData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Productname" ColumnName="Productname" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartOfUser">
+      <EntityTypeMapping TypeName="IsTypeOf(AlanCartModel.CartOfUser)">
+        <MappingFragment StoreEntitySet="CartOfUser">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="Chekcout" ColumnName="Chekcout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

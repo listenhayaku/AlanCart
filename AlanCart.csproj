@@ -127,24 +127,36 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserData.Context.cs">
+    <Compile Include="Models\AlanCartEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UserData.Context.tt</DependentUpon>
+      <DependentUpon>AlanCartEF.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlanCartEF.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlanCartEF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlanCartEF.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CartOfUser.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductData.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserData.cs">
-      <DependentUpon>UserData.tt</DependentUpon>
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserData.Custom.cs" />
-    <Compile Include="Models\UserData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserData.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Security.cs" />
   </ItemGroup>
@@ -157,26 +169,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\UserData.Context.tt">
+    <Content Include="Models\AlanCartEF.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UserData.Context.cs</LastGenOutput>
-      <DependentUpon>UserData.edmx</DependentUpon>
+      <DependentUpon>AlanCartEF.edmx</DependentUpon>
+      <LastGenOutput>AlanCartEF.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\UserData.tt">
+    <Content Include="Models\AlanCartEF.edmx.sql" />
+    <Content Include="Models\AlanCartEF.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserData.edmx</DependentUpon>
-      <LastGenOutput>UserData1.cs</LastGenOutput>
+      <DependentUpon>AlanCartEF.edmx</DependentUpon>
+      <LastGenOutput>AlanCartEF.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\UserData.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UserData.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\UserData.edmx.diagram">
-      <DependentUpon>UserData.edmx</DependentUpon>
-    </Content>
     <Content Include="README.md" />
+    <EntityDeploy Include="Models\AlanCartEF.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AlanCartEF.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AlanCartEF.edmx.diagram">
+      <DependentUpon>AlanCartEF.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -205,6 +218,8 @@
     <Content Include="Views\Register\SignIn.cshtml" />
     <Content Include="Views\Register\SignUp.cshtml" />
     <Content Include="Views\Register\UpdatePassword.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\MyCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
