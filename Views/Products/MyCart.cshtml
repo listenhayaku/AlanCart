@@ -1,4 +1,4 @@
-﻿
+﻿@using AlanCart.ViewModel
 @{
     ViewBag.Title = "MyCart";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,3 +6,23 @@
 
 <h2>MyCart</h2>
 
+<div class="row">
+
+    @foreach (MyCartViewModel item in Model)
+    {
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img src="@Url.Content(item.ImgUrl)" class="img-responsive">
+                    <h5>@item.ProductName</h5>
+                    <div>Stock: @item.Stock</div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+
+
+<button class="btn btn-primary">checkout</button>

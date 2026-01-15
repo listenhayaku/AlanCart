@@ -22,10 +22,11 @@ namespace AlanCart.Controllers
         [HttpPost]
         public ActionResult SignIn(Models.UserData ud)
         {
-            string result = ud.Verify();
-            if (result != null)
+            if (ud.Verify())    //如果驗證成功，ud的資料會被補全(原本ud的資料來自表單，只有username&password)
             {
-                Session["Username"] = result;
+                Session["Username"] = ud.Username;
+                Session["Nickname"] = ud.Nickname;
+                Session["Role"] = ud.Role;
                 return RedirectToAction("Index", "Home");
             }
             else

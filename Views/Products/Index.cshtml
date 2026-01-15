@@ -6,26 +6,62 @@
 
 <h2>Index</h2>
 
-
-@foreach(ProductData pd in Model)
+@if(ViewBag.Message != null)
 {
-    <div>
-        <table>
-            <tr>
-                <td>
-                    <img src="@pd.ImgUrl" alt="Alternate Text" />
-                </td>
-            </tr>
-            <tr><td>@pd.Productname</td></tr>
-            <tr><td>@pd.Stock</td></tr>
-            <tr>
-                <td>
-                    <button>-</button>
-                    <input type="text" name="name" value="" />
-                    <button>+</button>
-                    <button>add to cart</button>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <h5 class="alert-info">@ViewBag.Message</h5>
 }
+
+<div class="row">
+    @foreach(ProductData pd in Model)
+    {
+        using (Html.BeginForm("AddToCart", "Products", FormMethod.Post))
+        {
+            @Html.Hidden("ProductId",pd.Id)
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img src="@Url.Content(@pd.ImgUrl)" class="img-responsive" />
+                        <h5>@pd.Productname</h5>
+                        <h5>Stock: @pd.Stock</h5>
+                        <div>
+                            <button class="btn btn-default" type="button">-</button>
+                            <input type="text" name="Quantity" value="1" />
+                            <button class="btn btn-default" type="button">+</button>
+                        </div>
+                        <input type="submit" value="Add To Cart" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+</div>
+
+<script>
+
+    let listcarddiv = document.querySelectorAll(".panel-body div");
+    for (var i = 0; i < listcarddiv.length; i++) {
+        var listbtn = listcarddiv[i].querySelectorAll("button");    //[0]是-按鈕 [1]是+按鈕
+        (function (para) {
+            listbtn[1].onclick = function () {
+                add(para);
+            };
+        })(listcarddiv[i]);
+        (function (para) {
+            listbtn[0].onclick = function () {
+                sub(para);
+            };
+        })(listcarddiv[i]);
+    }
+    function sub(node) {
+        var input = node.querySelector("input");
+        if (input.value > 1) {
+            input.value--;
+        }
+    }
+    function add(node) {
+        var input = node.querySelector("input");
+        input.value++;
+    }
+</script>
+
+

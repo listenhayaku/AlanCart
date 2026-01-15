@@ -12,6 +12,41 @@ namespace AlanCart.Services
         private const int HashSize = 32;
         private const int Iterations = 10000;
 
+        public static bool IsValidSession(HttpSessionStateBase session) //直接驗證是否是有效Session
+        {
+            if(session != null)
+            {
+                using(Models.AlanCartEntities db = new Models.AlanCartEntities())
+                {
+                    if(session["Username"] != null)
+                    {
+                        string username = session["Username"].ToString();
+                        Models.UserData ud = (from s in db.UserData where s.Username == username select s).FirstOrDefault();
+                        if(ud != default(Models.UserData))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+
+        }
+        public static bool IsQualifiedUser(HttpSessionStateBase session,UserRole role)
+        {
+            string username = session["Username"].ToString();
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                Models.UserData ud = (from s in db.UserData where s.Username == username select s).FirstOrDefault();
+                if (ud == default(Models.UserData)) return false;
+                if(ud.Role == (int)role) return true;
+                else return false;
+            }
+        }
+        public static bool IsQualifiedUser(HttpSessionStateBase session,List<int> listrole)
+        {
+            return false;
+        }
         public static string HashPassword(string password)
         {
             byte[] salt = new byte[SaltSize];

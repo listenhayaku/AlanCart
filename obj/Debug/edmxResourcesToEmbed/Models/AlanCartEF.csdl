@@ -31,8 +31,8 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="ProductId" Type="String" Nullable="false" />
-    <Property Name="Stock" Type="String" Nullable="false" />
-    <Property Name="Chekcout" Type="String" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Stock" Type="Int32" Nullable="false" />
+    <Property Name="Chekcout" Type="Int32" Nullable="false" />
   </EntityType>
 </Schema>

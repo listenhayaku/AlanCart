@@ -16,8 +16,8 @@ namespace AlanCart.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public string ProductId { get; set; }
-        public string Stock { get; set; }
-        public string Chekcout { get; set; }
+        public int ProductId { get; set; }
+        public int Stock { get; set; }
+        public int Chekcout { get; set; }
     }
 }

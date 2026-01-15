@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 01/14/2026 23:21:32
+-- Date Created: 01/14/2026 23:40:15
 -- Generated from EDMX file: D:\Language\Projects\AlanCart\Models\AlanCartEF.edmx
 -- --------------------------------------------------
 
@@ -27,6 +27,9 @@ IF OBJECT_ID(N'[dbo].[UserData]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ProductData]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ProductData];
+GO
+IF OBJECT_ID(N'[dbo].[CartOfUser]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartOfUser];
 GO
 
 -- --------------------------------------------------
@@ -57,9 +60,9 @@ GO
 CREATE TABLE [dbo].[CartOfUser] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [UserId] int  NOT NULL,
-    [ProductId] nvarchar(max)  NOT NULL,
-    [Stock] nvarchar(max)  NOT NULL,
-    [Chekcout] nvarchar(max)  NOT NULL
+    [ProductId] int  NOT NULL,
+    [Stock] int  NOT NULL,
+    [Chekcout] int  NOT NULL
 );
 GO
 
