@@ -26,6 +26,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Productname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
     <Property Name="Stock" Type="int" Nullable="false" />
     <Property Name="Available" Type="int" Nullable="false" />
     <Property Name="ImgUrl" Type="nvarchar(max)" Nullable="false" />
@@ -65,6 +66,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Productname" Type="String" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
           <Property Name="Available" Type="Int32" Nullable="false" />
           <Property Name="ImgUrl" Type="String" Nullable="false" />
@@ -101,6 +103,7 @@
         <MappingFragment StoreEntitySet="ProductData">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Productname" ColumnName="Productname" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Stock" ColumnName="Stock" />
           <ScalarProperty Name="Available" ColumnName="Available" />
           <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />

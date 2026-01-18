@@ -17,6 +17,7 @@
         <MappingFragment StoreEntitySet="ProductData">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Productname" ColumnName="Productname" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Stock" ColumnName="Stock" />
           <ScalarProperty Name="Available" ColumnName="Available" />
           <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />

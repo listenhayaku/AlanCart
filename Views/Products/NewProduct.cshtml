@@ -6,3 +6,19 @@
 
 <h2>NewProduct</h2>
 
+@if (ViewBag.Message != null)
+{
+    <h5 class="alert-info">@ViewBag.Message</h5>
+}
+
+@using (Html.BeginForm("NewProduct", "Products", FormMethod.Post, new { enctype ="multipart/form-data"}))
+{
+    @Html.Label("ProductNanme")
+    @Html.TextBox("ProductName")
+    @Html.Label("Price")
+    @Html.TextBox("Price")
+    @Html.Label("Stock")
+    @Html.TextBox("Stock")
+    <input type="file" name="FileUploaded"class="btn btn-default"/>
+    <button type="submit" class="btn btn-default">Submit</button>
+}

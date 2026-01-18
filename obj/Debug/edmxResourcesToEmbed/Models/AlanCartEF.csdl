@@ -21,6 +21,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Productname" Type="String" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
     <Property Name="Stock" Type="Int32" Nullable="false" />
     <Property Name="Available" Type="Int32" Nullable="false" />
     <Property Name="ImgUrl" Type="String" Nullable="false" />

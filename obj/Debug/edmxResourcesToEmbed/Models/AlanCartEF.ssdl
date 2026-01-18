@@ -21,6 +21,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Productname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
     <Property Name="Stock" Type="int" Nullable="false" />
     <Property Name="Available" Type="int" Nullable="false" />
     <Property Name="ImgUrl" Type="nvarchar(max)" Nullable="false" />

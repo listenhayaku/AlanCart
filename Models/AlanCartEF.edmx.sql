@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 01/14/2026 23:40:15
+-- Date Created: 01/17/2026 14:56:42
 -- Generated from EDMX file: D:\Language\Projects\AlanCart\Models\AlanCartEF.edmx
 -- --------------------------------------------------
 
@@ -50,6 +50,7 @@ GO
 CREATE TABLE [dbo].[ProductData] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Productname] nvarchar(max)  NOT NULL,
+    [Price] int  NOT NULL,
     [Stock] int  NOT NULL,
     [Available] int  NOT NULL,
     [ImgUrl] nvarchar(max)  NOT NULL

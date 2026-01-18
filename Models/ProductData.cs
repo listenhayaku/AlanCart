@@ -16,6 +16,7 @@ namespace AlanCart.Models
     {
         public int Id { get; set; }
         public string Productname { get; set; }
+        public int Price { get; set; }
         public int Stock { get; set; }
         public int Available { get; set; }
         public string ImgUrl { get; set; }

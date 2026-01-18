@@ -29,7 +29,6 @@ namespace AlanCart.Models
                 }
             }
         }
-
         public bool Register()
         {
             using(Models.AlanCartEntities db = new AlanCartEntities())
