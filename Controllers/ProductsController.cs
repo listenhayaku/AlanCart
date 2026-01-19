@@ -74,9 +74,10 @@ namespace AlanCart.Controllers
                 if (ud == default(Models.UserData))  //Session["Username"] 有問題
                 {
                     TempData["Message"] = "Session Username error";
+                    ViewBag.Message = TempData["Message"];
                     return RedirectToAction("SignIn", "Register");
                 }
-                else
+                else    //Session["Username"] 正常
                 {
                     List<Models.CartOfUser> listcartofuser = new List<Models.CartOfUser>();
                     listcartofuser = (from s in db.CartOfUser where s.UserId == ud.Id select s).ToList();
@@ -84,19 +85,55 @@ namespace AlanCart.Controllers
                     foreach (Models.CartOfUser cartofuser in listcartofuser)
                     {
                         ViewModel.MyCartViewModel mycartviewmodel = new ViewModel.MyCartViewModel();
-                        mycartviewmodel.UserId = cartofuser.UserId;
-                        mycartviewmodel.ProductId = cartofuser.ProductId;
+                        mycartviewmodel.CartOfUserId = cartofuser.Id;
                         mycartviewmodel.ProductName = (from s in db.ProductData where s.Id == cartofuser.ProductId select s.Productname).FirstOrDefault();
                         mycartviewmodel.Price = (from s in db.ProductData where s.Id == cartofuser.ProductId select s.Price).FirstOrDefault();
                         mycartviewmodel.Stock = cartofuser.Stock;
                         mycartviewmodel.ImgUrl = (from s in db.ProductData where s.Id == cartofuser.ProductId select s.ImgUrl).FirstOrDefault();
                         listmycartviewmodel.Add(mycartviewmodel);
                     }
+                    ViewBag.Message = TempData["Message"];
                     return View(listmycartviewmodel);
                 }
             }
         }
+        [HttpPost]
+        public ActionResult EditCart(ViewModel.MyCartViewModel mycarviewmodel)
+        {
+            if (Services.Security.IsValidSession(Session))
+            {
+                using(Models.AlanCartEntities db = new Models.AlanCartEntities())
+                {
+                    Models.CartOfUser cartofuser = (from s in db.CartOfUser where s.Id == mycarviewmodel.CartOfUserId select s).FirstOrDefault();
+                    if(cartofuser != default(Models.CartOfUser))
+                    {
+                        if(cartofuser.Stock != mycarviewmodel.Stock)
+                        {
+                            cartofuser.Stock = mycarviewmodel.Stock;
+                            db.SaveChanges();
+                            TempData["Message"] = "Successful";
+                            return RedirectToAction("MyCart");
+                        }
+                        else
+                        {
+                            TempData["Message"] = "stock quantity still the same";
+                            return RedirectToAction("MyCart");
+                        }
+                    }
+                    else
+                    {
+                        TempData["Message"] = "item not found";
+                        return RedirectToAction("MyCart");
+                    }
+                }
+            }
+            else return RedirectToAction("SignIn", "Register");
+        }
+        public ActionResult DeleteItem(string cartofuserid)
+        {
 
+            return RedirectToAction("MyCart");
+        }
         public ActionResult Checkout()
         {
             if (Services.Security.IsValidSession(Session))

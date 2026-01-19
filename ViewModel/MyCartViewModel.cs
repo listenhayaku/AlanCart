@@ -7,8 +7,7 @@ namespace AlanCart.ViewModel
 {
     public class MyCartViewModel
     {
-        public int UserId { get; set; }
-        public int ProductId { get; set; }
+        public int CartOfUserId { get; set; }
         public string ProductName { get; set; }
         public int Price { get; set; }
         public int Stock { get; set; }
