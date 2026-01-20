@@ -1,0 +1,55 @@
+﻿@model AlanCart.Models.UserData
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditUser</h2>
+
+@if(ViewBag.Message != null)
+{
+    <h5 class="alert-info">@ViewBag.Message</h5>
+}
+
+@using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+{
+    <table class="table table-bordered table-hover table-hover">
+        <tbody>
+            <tr>
+                <td colspan="2">Username</td>
+                <td colspan="2">Password</td>
+            </tr>
+            <tr>
+                <td>
+                    @Model.Username
+                </td>
+                <td></td>
+                <td>
+                    <a href="@Url.Action("UpdatePassword", "Register", new {struserid=Model.Id})" class="btn btn-default">Reset</a>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Nickname
+                </td>
+                <td colspan="2">Role</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="Nickname" value="@Model.Nickname"  class="input-group input-sm"/>
+                </td>
+                <td></td>
+                <td>
+                    <input type="text" name="Role" value="@Model.Role" class="input-group input-sm" />
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    @Html.Hidden("Id",Model.Id)
+    @Html.Hidden("Username",Model.Username)
+    <button class="btn btn-primary">Apply</button>
+    <a href="@Url.Action("UserList")" class="btn btn-default">Back</a>
+}
+

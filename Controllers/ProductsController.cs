@@ -129,9 +129,51 @@ namespace AlanCart.Controllers
             }
             else return RedirectToAction("SignIn", "Register");
         }
-        public ActionResult DeleteItem(string cartofuserid)
+        public ActionResult DeleteItem(string strcartofuserid)
         {
-
+            if (!Services.Security.IsValidSession(Session))
+            {
+                TempData["Message"] = "Invalid Session";
+                return RedirectToAction("MyCart");
+            }
+            int cartofuserid = 0;
+            int userid = -1;
+            if (!int.TryParse(strcartofuserid, out cartofuserid))
+            {
+                TempData["Message"] = "Invalid Parameter";
+                return RedirectToAction("MyCart");
+            }
+            using(Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                string tempusername = Session["Username"].ToString();
+                Models.UserData ud = (from s in db.UserData where s.Username == tempusername select s).FirstOrDefault();
+                if(ud != null)
+                {
+                    userid = ud.Id;
+                }
+                else
+                {
+                    TempData["Message"] = "Invalid Session";
+                    return RedirectToAction("MyCart");
+                }
+            }
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                Models.CartOfUser cou = (from s in db.CartOfUser where s.UserId == userid && s.Id == cartofuserid select s).FirstOrDefault();
+                if(cou != null)
+                {
+                    db.CartOfUser.Remove(cou);
+                    db.SaveChanges();
+                    TempData["Message"] = "Delete Successful";
+                    return RedirectToAction("MyCart");
+                }
+                else
+                {
+                    TempData["Message"] = "User doesn't have this item";
+                    return RedirectToAction("MyCart");
+                }
+            }
+            TempData["Message"] = "Invalid Session";
             return RedirectToAction("MyCart");
         }
         public ActionResult Checkout()

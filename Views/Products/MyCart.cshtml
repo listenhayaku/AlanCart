@@ -8,6 +8,9 @@
     .button-area-off{
         display: none;
     }
+    .toggle-off{
+        display:none;
+    }
 </style>
 
 <h2>MyCart</h2>
@@ -29,14 +32,14 @@
                         <img src="@Url.Content(item.ImgUrl)" class="img-responsive">
                         <h5>ProductName:@item.ProductName</h5>
                         <h5>Price:@item.Price</h5>
-                        <div>Stock: @item.Stock</div>
+                        <div class="toggle-on">Stock: @item.Stock</div>
                         @Html.Hidden("Stock", item.Stock)
 
                         @Html.Hidden("CartOfUserId", item.CartOfUserId)
                         <div class="button-area">
                             <div class="button-area-off">
                                 <button type="submit" class="btn btn-success">Save</button>
-                                @Html.ActionLink("Delete", Url.Content("DeleteItem"), new { CartOfUserId = item.CartOfUserId }, new { @class = "btn btn-danger" })
+                                @Html.ActionLink("Delete", Url.Content("DeleteItem"), new { strcartofuserid = item.CartOfUserId }, new { @class = "btn btn-danger" })
                             </div>
                         <button type="button" class="btn btn-primary">Edit</button>
                         </div>
@@ -55,6 +58,9 @@
         var button_area = panel.querySelector(".button-area");
         var stock_input = panel.querySelector("#Stock");
         if (stock_input.type == "hidden") {
+            var oristock = document.querySelector(".toggle-on");
+            oristock.classList.remove("toggle-on");
+            oristock.classList.add("toggle-off");
             var button_cluster = button_area.querySelector(".button-area-off");
             stock_input.type = "";
             button_cluster.classList.remove("button-area-off");
@@ -63,8 +69,12 @@
             editcancelbutton.classList.remove("btn-primary");
             editcancelbutton.classList.add("btn-default");
             editcancelbutton.textContent = "Cancel";
+            
         }
         else {
+            var oristock = document.querySelector(".toggle-off");
+            oristock.classList.remove("toggle-off");
+            oristock.classList.add("toggle-on");
             var button_cluster = button_area.querySelector(".button-area-on");
             stock_input.type = "hidden";
             button_cluster.classList.remove("button-area-on");

@@ -59,27 +59,53 @@ namespace AlanCart.Controllers
             Session.Clear();
             return RedirectToAction("SignIn", "Register");
         }
-
-        public ActionResult UpdatePassword()
-        {
-            ViewBag.Message = TempData["Message"];
-            return View();
+        public ActionResult UpdatePassword(string struserid)    //如果沒有帶參數就是本人，如果有，就是admin改別人的密碼
+            {
+            if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");
+            if(int.TryParse(struserid, out int id))
+            {
+                if (! Services.Security.IsQualifiedUser(Session, UserRole.Administrator)) return RedirectToAction("Logout", "Register");
+                ViewBag.UserId = (int?)id;
+                return View();
+            }
+            else
+            {
+                ViewBag.Message = TempData["Message"];
+                return View();
+            }
         }
         [HttpPost]
         public ActionResult UpdatePassword(Models.UserData ud)
         {
-            ud.Username = Session["Username"].ToString();
-            if (ud.UpdatePassword())
+            if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");
+            if(ud.Id == 0)
             {
-                TempData["Message"] = "Successful";
-                return RedirectToAction("Index", "Home");
+                ud.Username = Session["Username"].ToString();
+                if (ud.UpdatePassword())
+                {
+                    TempData["Message"] = "Successful";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Message"] = "Failed";
+                    return RedirectToAction("UpdatePassword");
+                }
             }
             else
             {
-                TempData["Message"] = "Failed";
-                return RedirectToAction("UpdatePassword");
+                if (!Services.Security.IsQualifiedUser(Session, UserRole.Administrator)) return RedirectToAction("Logout", "Register");
+                if (ud.UpdatePassword())
+                {
+                    TempData["Message"] = "Successful";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Message"] = "Failed";
+                    return RedirectToAction("UpdatePassword");
+                }
             }
-            
         }
     }
 }

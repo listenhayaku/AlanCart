@@ -46,11 +46,11 @@ namespace AlanCart.Models
                 }
             }
         }
-        public bool UpdatePassword()
+        public bool UpdatePassword()    //如果username有，就是本人自己改的，如果id有，就是admin改的，如果都有...why?
         {
             using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
-                Models.UserData ud = (from s in db.UserData where s.Username == this.Username select s).FirstOrDefault();
+                Models.UserData ud = (from s in db.UserData where s.Username == this.Username || s.Id == this.Id select s).FirstOrDefault();
                 if (ud == default(Models.UserData)) return false;
                 ud.Password = Services.Security.HashPassword(this.Password);
                 db.SaveChanges();

@@ -1,0 +1,23 @@
+﻿@using AlanCart.Models
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserList</h2>
+
+@if (ViewBag.Message != null)
+{
+    <h5 class="alert-info">@ViewBag.Message</h5>
+}
+
+@foreach (UserData ud in Model)
+{
+    <a href="@Url.Action("EditUser","User",new {struserid=ud.Id})">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 panel panel-default">
+            <div class="panel-body">
+                @ud.Nickname
+            </div>
+        </div>
+    </a>
+}
