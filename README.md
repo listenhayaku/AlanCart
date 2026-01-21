@@ -18,7 +18,9 @@ ProductData執行圖片刪除及從資料表中移除
 
 #### Session格式
 
+* Id 最終還是妥協了
 * Username = 就db的Username欄位
+* Nickname
 * Role
 	0 = Administrator
 	1 = Coleader

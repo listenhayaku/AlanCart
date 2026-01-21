@@ -24,7 +24,7 @@ namespace AlanCart.Controllers
         {
             if (ud.Verify())    //如果驗證成功，ud的資料會被補全(原本ud的資料來自表單，只有username&password)
             {
-                Session["Id"] = ud.Id;  //我最終還是妥栛了 :D
+                Session["Id"] = ud.Id;  //我最終還是妥協了 :D
                 Session["Username"] = ud.Username;
                 Session["Nickname"] = ud.Nickname;
                 Session["Role"] = ud.Role;
