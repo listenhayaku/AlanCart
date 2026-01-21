@@ -1,31 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="AlanCartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="AlanCartModelStoreContainer">
-    <EntitySet Name="UserData" EntityType="AlanCartModel.Store.UserData" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProductData" EntityType="AlanCartModel.Store.ProductData" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CartOfUser" EntityType="AlanCartModel.Store.CartOfUser" store:Type="Tables" Schema="dbo" />
-  </EntityContainer>
-  <EntityType Name="UserData">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Nickname" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Role" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProductData">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Productname" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Price" Type="int" Nullable="false" />
-    <Property Name="Stock" Type="int" Nullable="false" />
-    <Property Name="Available" Type="int" Nullable="false" />
-    <Property Name="ImgUrl" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
+<Schema Namespace="AlanCartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="CartOfUser">
     <Key>
       <PropertyRef Name="Id" />
@@ -36,4 +10,31 @@
     <Property Name="Stock" Type="int" Nullable="false" />
     <Property Name="Chekcout" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ProductData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SellerId" Type="int" Nullable="false" />
+    <Property Name="Productname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Stock" Type="int" Nullable="false" />
+    <Property Name="Available" Type="int" Nullable="false" />
+    <Property Name="ImgUrl" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nickname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="AlanCartModelStoreContainer">
+    <EntitySet Name="CartOfUser" EntityType="Self.CartOfUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductData" EntityType="Self.ProductData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
 </Schema>

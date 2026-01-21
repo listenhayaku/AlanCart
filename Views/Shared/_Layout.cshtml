@@ -37,9 +37,12 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
                 {
+                    <li>@Html.ActionLink("MyOrders", "MyOrders", "Products")</li>
                     <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
+                    <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
                     <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
                 }
+
                 <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
                 <li>@Html.ActionLink("UpdatePassword", "UpdatePassword", "Register")</li>
                 <li>@Html.ActionLink("Logout", "Logout", "Register")</li>

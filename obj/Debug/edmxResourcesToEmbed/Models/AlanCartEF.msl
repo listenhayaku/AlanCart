@@ -15,6 +15,7 @@
     <EntitySetMapping Name="ProductData">
       <EntityTypeMapping TypeName="IsTypeOf(AlanCartModel.ProductData)">
         <MappingFragment StoreEntitySet="ProductData">
+          <ScalarProperty Name="SellerId" ColumnName="SellerId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Productname" ColumnName="Productname" />
           <ScalarProperty Name="Price" ColumnName="Price" />

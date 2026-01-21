@@ -20,5 +20,6 @@ namespace AlanCart.Models
         public int Stock { get; set; }
         public int Available { get; set; }
         public string ImgUrl { get; set; }
+        public int SellerId { get; set; }
     }
 }

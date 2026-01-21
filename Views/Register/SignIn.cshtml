@@ -8,7 +8,7 @@
 
 @if(ViewBag.Message != null)
 {
-    <h1 class="info" style="color: red;">@ViewBag.Message</h1>
+    <h5 class="alert-info">@ViewBag.Message</h5>
 }
 
 @using (Html.BeginForm("SignIn", "Register", FormMethod.Post))

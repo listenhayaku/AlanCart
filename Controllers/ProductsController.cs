@@ -12,11 +12,20 @@ namespace AlanCart.Controllers
         // GET: Products
         public ActionResult Index()
         {
+            if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");
             ViewBag.Message = TempData["Message"];
+            string username = Session["Username"].ToString();
+            int userid = 0;
             using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
+                Models.UserData ud = (from s in db.UserData where s.Username == username select s).FirstOrDefault();
+                userid = ud.Id;
+            }
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+
                 List<Models.ProductData> listpd = new List<Models.ProductData>();
-                listpd = (from s in db.ProductData select s).ToList();
+                listpd = (from s in db.ProductData where s.SellerId != userid select s).ToList();
                 return View(listpd);
             }
         }
@@ -129,7 +138,7 @@ namespace AlanCart.Controllers
             }
             else return RedirectToAction("SignIn", "Register");
         }
-        public ActionResult DeleteItem(string strcartofuserid)
+        public ActionResult DeleteItem(string strcartofuserid)  //刪除購物車的，刪除賣場的在DeleteProduct
         {
             if (!Services.Security.IsValidSession(Session))
             {
@@ -212,6 +221,41 @@ namespace AlanCart.Controllers
                 return RedirectToAction("NewProduct");
             }
 
+        }
+        public ActionResult MyProducts()
+        {
+            if (!Services.Security.IsValidSession(Session))
+            {
+                TempData["Message"] = "Invalid Session";
+                return RedirectToAction("Logout", "Register");
+            }
+            if (!int.TryParse(Session["Id"].ToString(),out int userid))
+            {
+                TempData["Message"] = "parsing session id failed";
+                return RedirectToAction("Logout", "Register");
+            }
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                List<Models.ProductData> listpd = new List<Models.ProductData>();
+                listpd = (from s in db.ProductData where s.SellerId == userid select s).ToList();
+                return View(listpd);
+            }
+        }
+        public ActionResult MyOrders()
+        {
+            return View();
+        }
+        public ActionResult DeleteProduct(string strproductid)
+        {
+            if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");  //還敢皮?直接給你登出
+            if (!int.TryParse(strproductid, out int productid)) return RedirectToAction("MyProducts");
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                Models.ProductData pd = (from s in db.ProductData where s.Id == productid select s).FirstOrDefault();
+                if (pd == default(Models.ProductData)) return RedirectToAction("MyProducts");
+                System.Diagnostics.Debug.WriteLine(Server.MapPath(pd.ImgUrl));
+            }
+            return RedirectToAction("MyProducts");
         }
     }
 }
