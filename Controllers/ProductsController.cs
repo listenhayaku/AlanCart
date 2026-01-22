@@ -210,23 +210,21 @@ namespace AlanCart.Controllers
                         Models.ProductData productdata = (from s in db.ProductData where s.Id == cou.ProductId select s).FirstOrDefault();
                         listproductdata.Add(productdata);
                     }
-
+                    //取得所有賣家ID
                     foreach(Models.ProductData productdata in listproductdata)
                     {
-                        if(listseller.Count < 1)
+                        bool found = false;
+                        for (int i = 0;i < listseller.Count; i++)
                         {
-                            listseller.Add(productdata.Id);
-                            continue;
-                        }
-                        for(int i = 0;i < listseller.Count; i++)
-                        {
-                            if (listseller[i] == productdata.Id)
+                            if (listseller[i] == productdata.SellerId)
                             {
-                                continue;
+                                found = true;
+                                break;
                             }
                         }
-                        listseller.Add(productdata.Id);
+                        if(!found) listseller.Add(productdata.Id);
                     }
+                    //建立訂單
                     List<Models.OrderData> listorderdata = new List<Models.OrderData>();
                     for(int i = 0;i < listseller.Count; i++)
                     {
@@ -235,10 +233,20 @@ namespace AlanCart.Controllers
                         orderdata.BuyerId = userid;
                         foreach(Models.OrderItem orderitem in listorderitem)
                         {
-                            if(orderitem.I)
+                            foreach(Models.ProductData productdata in listproductdata)
+                            {
+                                if(orderitem.ProductId == productdata.Id)
+                                {
+                                    orderdata.TotalAmount += productdata.Price;
+                                }
+                            }
                         }
+                        orderdata.OrderStatus = 0;
+                        listorderdata.Add(orderdata);
+                        db.OrderData.Add(orderdata);
                     }
-
+                    //在這前面，沒辦先給orderitem.orderid，因為orderdata還沒存進db，沒有id
+                    
                 }
                 return RedirectToAction("MyCart");
             }
