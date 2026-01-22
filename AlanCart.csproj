@@ -151,6 +151,12 @@
     <Compile Include="Models\CartOfUser.cs">
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderData.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderItem.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductData.cs">
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>

@@ -8,7 +8,32 @@
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="ProductId" Type="int" Nullable="false" />
     <Property Name="Stock" Type="int" Nullable="false" />
-    <Property Name="Chekcout" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="SellerId" Type="int" Nullable="false" />
+    <Property Name="BuyerId" Type="int" Nullable="false" />
+    <Property Name="TotalAmount" Type="int" Nullable="false" />
+    <Property Name="OrderStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'AlanCart.dbo.OrderItem' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ProductId" />
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="Stock" />
+      <PropertyRef Name="OrderStatus" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="Stock" Type="int" Nullable="false" />
+    <Property Name="OrderStatus" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProductData">
     <Key>
@@ -34,7 +59,17 @@
   </EntityType>
   <EntityContainer Name="AlanCartModelStoreContainer">
     <EntitySet Name="CartOfUser" EntityType="Self.CartOfUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderData" EntityType="Self.OrderData" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductData" EntityType="Self.ProductData" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderItem" EntityType="Self.OrderItem" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[OrderItem].[Id] AS [Id], 
+[OrderItem].[ProductId] AS [ProductId], 
+[OrderItem].[OrderId] AS [OrderId], 
+[OrderItem].[Stock] AS [Stock], 
+[OrderItem].[OrderStatus] AS [OrderStatus]
+FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

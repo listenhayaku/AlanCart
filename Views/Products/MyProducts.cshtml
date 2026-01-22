@@ -6,6 +6,11 @@
 
 <h2>MyProducts</h2>
 
+@if(ViewBag.Message != null)
+{
+    <h5 class="alert-info">@ViewBag.Message</h5>
+}
+
 <div class="row">
     @foreach (AlanCart.Models.ProductData pd in Model)
     {

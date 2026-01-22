@@ -13,7 +13,32 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Stock" Type="int" Nullable="false" />
-          <Property Name="Chekcout" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SellerId" Type="int" Nullable="false" />
+          <Property Name="BuyerId" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="int" Nullable="false" />
+          <Property Name="OrderStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'AlanCart.dbo.OrderItem' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="Stock" />
+            <PropertyRef Name="OrderStatus" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="Stock" Type="int" Nullable="false" />
+          <Property Name="OrderStatus" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductData">
           <Key>
@@ -39,8 +64,18 @@
         </EntityType>
         <EntityContainer Name="AlanCartModelStoreContainer">
           <EntitySet Name="CartOfUser" EntityType="Self.CartOfUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderData" EntityType="Self.OrderData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductData" EntityType="Self.ProductData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItem" EntityType="Self.OrderItem" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[OrderItem].[Id] AS [Id], 
+[OrderItem].[ProductId] AS [ProductId], 
+[OrderItem].[OrderId] AS [OrderId], 
+[OrderItem].[Stock] AS [Stock], 
+[OrderItem].[OrderStatus] AS [OrderStatus]
+FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -50,6 +85,8 @@
           <EntitySet Name="UserData" EntityType="AlanCartModel.UserData" />
           <EntitySet Name="ProductData" EntityType="AlanCartModel.ProductData" />
           <EntitySet Name="CartOfUser" EntityType="AlanCartModel.CartOfUser" />
+          <EntitySet Name="OrderData" EntityType="AlanCartModel.OrderData" />
+          <EntitySet Name="OrderItem" EntityType="AlanCartModel.OrderItem" />
         </EntityContainer>
         <EntityType Name="UserData">
           <Key>
@@ -81,7 +118,30 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
-          <Property Name="Chekcout" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SellerId" Type="Int32" Nullable="false" />
+          <Property Name="BuyerId" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Int32" Nullable="false" />
+          <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="Stock" />
+            <PropertyRef Name="OrderStatus" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="OrderStatus" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -120,10 +180,31 @@
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="Stock" ColumnName="Stock" />
-          <ScalarProperty Name="Chekcout" ColumnName="Chekcout" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="OrderData">
+            <EntityTypeMapping TypeName="AlanCartModel.OrderData">
+              <MappingFragment StoreEntitySet="OrderData">
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+                <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItem">
+            <EntityTypeMapping TypeName="AlanCartModel.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

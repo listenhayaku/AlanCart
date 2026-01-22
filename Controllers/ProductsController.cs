@@ -234,6 +234,7 @@ namespace AlanCart.Controllers
                 TempData["Message"] = "parsing session id failed";
                 return RedirectToAction("Logout", "Register");
             }
+            ViewBag.Message = TempData["Message"];
             using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
                 List<Models.ProductData> listpd = new List<Models.ProductData>();
@@ -253,9 +254,17 @@ namespace AlanCart.Controllers
             {
                 Models.ProductData pd = (from s in db.ProductData where s.Id == productid select s).FirstOrDefault();
                 if (pd == default(Models.ProductData)) return RedirectToAction("MyProducts");
-                System.Diagnostics.Debug.WriteLine(Server.MapPath(pd.ImgUrl));
+                if (pd.DeleteProduct()) //這個方法會自己把資料從資料庫刪掉
+                {
+                    TempData["Message"] = "Delete Successful";
+                    return RedirectToAction("MyProducts");
+                }
+                else
+                {
+                    TempData["Message"] = "Delete Failed";
+                    return RedirectToAction("MyProducts");
+                }
             }
-            return RedirectToAction("MyProducts");
         }
     }
 }

@@ -4,6 +4,8 @@
     <EntitySet Name="UserData" EntityType="AlanCartModel.UserData" />
     <EntitySet Name="ProductData" EntityType="AlanCartModel.ProductData" />
     <EntitySet Name="CartOfUser" EntityType="AlanCartModel.CartOfUser" />
+    <EntitySet Name="OrderData" EntityType="AlanCartModel.OrderData" />
+    <EntitySet Name="OrderItem" EntityType="AlanCartModel.OrderItem" />
   </EntityContainer>
   <EntityType Name="UserData">
     <Key>
@@ -35,6 +37,29 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="ProductId" Type="Int32" Nullable="false" />
     <Property Name="Stock" Type="Int32" Nullable="false" />
-    <Property Name="Chekcout" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="SellerId" Type="Int32" Nullable="false" />
+    <Property Name="BuyerId" Type="Int32" Nullable="false" />
+    <Property Name="TotalAmount" Type="Int32" Nullable="false" />
+    <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ProductId" />
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="Stock" />
+      <PropertyRef Name="OrderStatus" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="Stock" Type="Int32" Nullable="false" />
+    <Property Name="OrderStatus" Type="Int32" Nullable="false" />
   </EntityType>
 </Schema>
