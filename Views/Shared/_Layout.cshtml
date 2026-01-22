@@ -34,30 +34,37 @@
                 }
                 else
                 {
-            <ul class="nav navbar-nav navbar-right">
-                @if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
-                {
-                    <li>@Html.ActionLink("MyOrders", "MyOrders", "Products")</li>
-                    <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
-                    <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
-                    <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
-                }
-
-                <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
-                <li>@Html.ActionLink("UpdatePassword", "UpdatePassword", "Register")</li>
-                <li>@Html.ActionLink("Logout", "Logout", "Register")</li>
-                <li style="color:white;">歡迎，@Session["Nickname"]</li>
-            </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("UpdatePassword", "UpdatePassword", "Register")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Register")</li>
+                        <li style="color:white;">歡迎，@Session["Nickname"]</li>
+                    </ul>
                 }
             </div>
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
-        </footer>
+        <div class="row">
+            <div class="col-sm-3 col-md-2" style="background-color: black;min-height: 100vh;">
+                <ul class="nav nav-pills nav-stacked">
+                    @if (Session["Username"] != null)
+                    {
+                        if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
+                        {
+                            <li>@Html.ActionLink("MyOrders", "MyOrders", "Products")</li>
+                            <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
+                            <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
+                            <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
+                        }
+
+                        <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
+                    }
+                </ul>
+            </div>
+            <div class="col-sm-9 col-md-10">
+                @RenderBody()
+            </div>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

@@ -185,15 +185,66 @@ namespace AlanCart.Controllers
             TempData["Message"] = "Invalid Session";
             return RedirectToAction("MyCart");
         }
-        public ActionResult Checkout()
+        public ActionResult Checkout()  //這個不用參數，直接暴力清空購物車
         {
-            if (Services.Security.IsValidSession(Session))
+            if (Services.Security.IsValidSession(Session) && int.TryParse(Session["Id"].ToString(),out int userid))
             {
+                using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+                {
+                    List<Models.CartOfUser> listcou = (from s in db.CartOfUser where s.UserId == userid select s).ToList();
+                    //一筆訂單只會有一個賣家，如果買家一次買2個人的，會自動分2筆
+                    //先建立訂單內容物資料
+                    List<Models.OrderItem> listorderitem = new List<Models.OrderItem>();
+                    //判斷到底要幾個訂單(有幾個賣家)用
+                    List<int> listseller = new List<int>();
+                    //為了知道有幾個賣家，需要這個... cartofuser.productid->product.id;product.seller->userdata.id;
+                    List<Models.ProductData> listproductdata = new List<Models.ProductData>();
+                    foreach (Models.CartOfUser cou in listcou)
+                    {
+                        Models.OrderItem orderitem = new Models.OrderItem();
+                        orderitem.ProductId = cou.ProductId;
+                        orderitem.Stock = cou.Stock;
+                        orderitem.OrderStatus = 0;
+                        listorderitem.Add(orderitem);
 
+                        Models.ProductData productdata = (from s in db.ProductData where s.Id == cou.ProductId select s).FirstOrDefault();
+                        listproductdata.Add(productdata);
+                    }
+
+                    foreach(Models.ProductData productdata in listproductdata)
+                    {
+                        if(listseller.Count < 1)
+                        {
+                            listseller.Add(productdata.Id);
+                            continue;
+                        }
+                        for(int i = 0;i < listseller.Count; i++)
+                        {
+                            if (listseller[i] == productdata.Id)
+                            {
+                                continue;
+                            }
+                        }
+                        listseller.Add(productdata.Id);
+                    }
+                    List<Models.OrderData> listorderdata = new List<Models.OrderData>();
+                    for(int i = 0;i < listseller.Count; i++)
+                    {
+                        Models.OrderData orderdata = new Models.OrderData();
+                        orderdata.SellerId = listseller[i];
+                        orderdata.BuyerId = userid;
+                        foreach(Models.OrderItem orderitem in listorderitem)
+                        {
+                            if(orderitem.I)
+                        }
+                    }
+
+                }
                 return RedirectToAction("MyCart");
             }
             else
             {
+                TempData["Message"] = "Invalid Session";
                 return RedirectToAction("MyCart");
             }
 
