@@ -14,10 +14,23 @@ namespace AlanCart.Models
     
     public partial class UserData
     {
+        public UserData()
+        {
+            this.CartOfUser = new HashSet<CartOfUser>();
+            this.OrderData = new HashSet<OrderData>();
+            this.OrderData1 = new HashSet<OrderData>();
+            this.ProductData = new HashSet<ProductData>();
+        }
+    
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Nickname { get; set; }
         public int Role { get; set; }
+    
+        public virtual ICollection<CartOfUser> CartOfUser { get; set; }
+        public virtual ICollection<OrderData> OrderData { get; set; }
+        public virtual ICollection<OrderData> OrderData1 { get; set; }
+        public virtual ICollection<ProductData> ProductData { get; set; }
     }
 }

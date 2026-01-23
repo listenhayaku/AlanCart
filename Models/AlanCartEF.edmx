@@ -18,23 +18,17 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SellerId" Type="int" Nullable="false" />
           <Property Name="BuyerId" Type="int" Nullable="false" />
           <Property Name="TotalAmount" Type="int" Nullable="false" />
           <Property Name="OrderStatus" Type="int" Nullable="false" />
         </EntityType>
-        <!--產生期間發現錯誤:
-警告 6002: 資料表/檢視 'AlanCart.dbo.OrderItem' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="OrderItem">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="OrderId" />
-            <PropertyRef Name="Stock" />
-            <PropertyRef Name="OrderStatus" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
           <Property Name="Stock" Type="int" Nullable="false" />
@@ -62,20 +56,124 @@
           <Property Name="Nickname" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CartOfUser_ProductData">
+          <End Role="ProductData" Type="Self.ProductData" Multiplicity="1" />
+          <End Role="CartOfUser" Type="Self.CartOfUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartOfUser">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartOfUser_UserData">
+          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+          <End Role="CartOfUser" Type="Self.CartOfUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartOfUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderData_UserData">
+          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+          <End Role="OrderData" Type="Self.OrderData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderData">
+              <PropertyRef Name="BuyerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderData_UserData1">
+          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+          <End Role="OrderData" Type="Self.OrderData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderData">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItem_OrderItem">
+          <End Role="OrderData" Type="Self.OrderData" Multiplicity="1" />
+          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItem_ProductData">
+          <End Role="ProductData" Type="Self.ProductData" Multiplicity="1" />
+          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductData_UserData">
+          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+          <End Role="ProductData" Type="Self.ProductData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductData">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AlanCartModelStoreContainer">
           <EntitySet Name="CartOfUser" EntityType="Self.CartOfUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderData" EntityType="Self.OrderData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductData" EntityType="Self.ProductData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderItem" EntityType="Self.OrderItem" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[OrderItem].[Id] AS [Id], 
-[OrderItem].[ProductId] AS [ProductId], 
-[OrderItem].[OrderId] AS [OrderId], 
-[OrderItem].[Stock] AS [Stock], 
-[OrderItem].[OrderStatus] AS [OrderStatus]
-FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK_CartOfUser_ProductData" Association="Self.FK_CartOfUser_ProductData">
+            <End Role="ProductData" EntitySet="ProductData" />
+            <End Role="CartOfUser" EntitySet="CartOfUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartOfUser_UserData" Association="Self.FK_CartOfUser_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="CartOfUser" EntitySet="CartOfUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderData_UserData" Association="Self.FK_OrderData_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="OrderData" EntitySet="OrderData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderData_UserData1" Association="Self.FK_OrderData_UserData1">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="OrderData" EntitySet="OrderData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItem_OrderItem" Association="Self.FK_OrderItem_OrderItem">
+            <End Role="OrderData" EntitySet="OrderData" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItem_ProductData" Association="Self.FK_OrderItem_ProductData">
+            <End Role="ProductData" EntitySet="ProductData" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductData_UserData" Association="Self.FK_ProductData_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="ProductData" EntitySet="ProductData" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -87,6 +185,34 @@ FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
           <EntitySet Name="CartOfUser" EntityType="AlanCartModel.CartOfUser" />
           <EntitySet Name="OrderData" EntityType="AlanCartModel.OrderData" />
           <EntitySet Name="OrderItem" EntityType="AlanCartModel.OrderItem" />
+          <AssociationSet Name="FK_CartOfUser_ProductData" Association="AlanCartModel.FK_CartOfUser_ProductData">
+            <End Role="ProductData" EntitySet="ProductData" />
+            <End Role="CartOfUser" EntitySet="CartOfUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartOfUser_UserData" Association="AlanCartModel.FK_CartOfUser_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="CartOfUser" EntitySet="CartOfUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderData_UserData" Association="AlanCartModel.FK_OrderData_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="OrderData" EntitySet="OrderData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderData_UserData1" Association="AlanCartModel.FK_OrderData_UserData1">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="OrderData" EntitySet="OrderData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItem_OrderData" Association="AlanCartModel.FK_OrderItem_OrderData">
+            <End Role="OrderData" EntitySet="OrderData" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItem_ProductData" Association="AlanCartModel.FK_OrderItem_ProductData">
+            <End Role="ProductData" EntitySet="ProductData" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductData_UserData" Association="AlanCartModel.FK_ProductData_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="ProductData" EntitySet="ProductData" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserData">
           <Key>
@@ -97,6 +223,10 @@ FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Nickname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CartOfUser" Relationship="AlanCartModel.FK_CartOfUser_UserData" FromRole="UserData" ToRole="CartOfUser" />
+          <NavigationProperty Name="OrderData" Relationship="AlanCartModel.FK_OrderData_UserData" FromRole="UserData" ToRole="OrderData" />
+          <NavigationProperty Name="OrderData1" Relationship="AlanCartModel.FK_OrderData_UserData1" FromRole="UserData" ToRole="OrderData" />
+          <NavigationProperty Name="ProductData" Relationship="AlanCartModel.FK_ProductData_UserData" FromRole="UserData" ToRole="ProductData" />
         </EntityType>
         <EntityType Name="ProductData">
           <Key>
@@ -109,6 +239,9 @@ FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
           <Property Name="Available" Type="Int32" Nullable="false" />
           <Property Name="ImgUrl" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="SellerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CartOfUser" Relationship="AlanCartModel.FK_CartOfUser_ProductData" FromRole="ProductData" ToRole="CartOfUser" />
+          <NavigationProperty Name="OrderItem" Relationship="AlanCartModel.FK_OrderItem_ProductData" FromRole="ProductData" ToRole="OrderItem" />
+          <NavigationProperty Name="UserData" Relationship="AlanCartModel.FK_ProductData_UserData" FromRole="ProductData" ToRole="UserData" />
         </EntityType>
         <EntityType Name="CartOfUser">
           <Key>
@@ -118,6 +251,8 @@ FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductData" Relationship="AlanCartModel.FK_CartOfUser_ProductData" FromRole="CartOfUser" ToRole="ProductData" />
+          <NavigationProperty Name="UserData" Relationship="AlanCartModel.FK_CartOfUser_UserData" FromRole="CartOfUser" ToRole="UserData" />
         </EntityType>
         <EntityType Name="OrderData">
           <Key>
@@ -128,21 +263,106 @@ FROM [dbo].[OrderItem] AS [OrderItem]</DefiningQuery>
           <Property Name="BuyerId" Type="Int32" Nullable="false" />
           <Property Name="TotalAmount" Type="Int32" Nullable="false" />
           <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserData" Relationship="AlanCartModel.FK_OrderData_UserData" FromRole="OrderData" ToRole="UserData" />
+          <NavigationProperty Name="UserData1" Relationship="AlanCartModel.FK_OrderData_UserData1" FromRole="OrderData" ToRole="UserData" />
+          <NavigationProperty Name="OrderItem" Relationship="AlanCartModel.FK_OrderItem_OrderData" FromRole="OrderData" ToRole="OrderItem" />
         </EntityType>
         <EntityType Name="OrderItem">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="OrderId" />
-            <PropertyRef Name="Stock" />
-            <PropertyRef Name="OrderStatus" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="OrderId" Type="Int32" Nullable="false" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
           <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderData" Relationship="AlanCartModel.FK_OrderItem_OrderData" FromRole="OrderItem" ToRole="OrderData" />
+          <NavigationProperty Name="ProductData" Relationship="AlanCartModel.FK_OrderItem_ProductData" FromRole="OrderItem" ToRole="ProductData" />
         </EntityType>
+        <Association Name="FK_CartOfUser_ProductData">
+          <End Type="AlanCartModel.ProductData" Role="ProductData" Multiplicity="1" />
+          <End Type="AlanCartModel.CartOfUser" Role="CartOfUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartOfUser">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartOfUser_UserData">
+          <End Type="AlanCartModel.UserData" Role="UserData" Multiplicity="1" />
+          <End Type="AlanCartModel.CartOfUser" Role="CartOfUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartOfUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderData_UserData">
+          <End Type="AlanCartModel.UserData" Role="UserData" Multiplicity="1" />
+          <End Type="AlanCartModel.OrderData" Role="OrderData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderData">
+              <PropertyRef Name="BuyerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderData_UserData1">
+          <End Type="AlanCartModel.UserData" Role="UserData" Multiplicity="1" />
+          <End Type="AlanCartModel.OrderData" Role="OrderData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderData">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItem_OrderData">
+          <End Type="AlanCartModel.OrderData" Role="OrderData" Multiplicity="1" />
+          <End Type="AlanCartModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItem_ProductData">
+          <End Type="AlanCartModel.ProductData" Role="ProductData" Multiplicity="1" />
+          <End Type="AlanCartModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductData_UserData">
+          <End Type="AlanCartModel.UserData" Role="UserData" Multiplicity="1" />
+          <End Type="AlanCartModel.ProductData" Role="ProductData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductData">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

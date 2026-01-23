@@ -19,5 +19,8 @@ namespace AlanCart.Models
         public int OrderId { get; set; }
         public int Stock { get; set; }
         public int OrderStatus { get; set; }
+    
+        public virtual OrderData OrderData { get; set; }
+        public virtual ProductData ProductData { get; set; }
     }
 }

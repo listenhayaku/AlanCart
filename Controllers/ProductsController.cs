@@ -185,15 +185,69 @@ namespace AlanCart.Controllers
             TempData["Message"] = "Invalid Session";
             return RedirectToAction("MyCart");
         }
-        public ActionResult Checkout()
+        public ActionResult Checkout()  //這個不用參數，直接暴力清空購物車
         {
-            if (Services.Security.IsValidSession(Session))
+            if (Services.Security.IsValidSession(Session) && int.TryParse(Session["Id"].ToString(),out int userid))
             {
+                using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+                {
+                    List<Models.CartOfUser> listCOU = (from s in db.CartOfUser where s.UserId == userid select s).ToList();
+                    List<Models.OrderData> listOD = new List<Models.OrderData>();
+                    List<Models.OrderItem> listOI = new List<Models.OrderItem>();
+                    //先單純建立OrderData
+                    foreach(Models.CartOfUser COU in listCOU)
+                    {
+                        Models.OrderItem orderitem = new Models.OrderItem();
+                        orderitem.ProductId = COU.ProductId;
+                        orderitem.Stock = COU.Stock;
+                        orderitem.OrderStatus = 0;
+                        listOI.Add(orderitem);
 
+                        //OrderData
+                        int found = -1;
+                        for(int i =0;i < listOD.Count; i++)
+                        {
+                            if (listOD[i].SellerId == COU.ProductData.SellerId)
+                            {
+                                found = i;
+                            }
+                        }
+                        if (found == -1)
+                        {
+                            Models.OrderData orderdata = new Models.OrderData();
+                            orderdata.SellerId = COU.ProductData.SellerId;
+                            orderdata.BuyerId = COU.UserId;
+                            orderdata.TotalAmount += COU.ProductData.Price * COU.Stock;
+                            orderdata.OrderStatus = 0;
+                            listOD.Add(orderdata);
+                        }
+                        else
+                        {
+                            listOD[found].TotalAmount += COU.ProductData.Price * COU.Stock;
+                        }
+                    }
+                    foreach (Models.OrderData orderdata in listOD) db.OrderData.Add(orderdata);
+                    db.SaveChanges();
+                    listOD = (from s in db.OrderData select s).ToList();
+                    foreach(Models.OrderItem orderitem in listOI)
+                    {
+                        for(int i = 0;i < listOD.Count; i++)
+                        {
+                            orderitem.ProductData = (from s in db.ProductData where s.Id == orderitem.ProductId select s).FirstOrDefault();
+                            if(orderitem.ProductData.SellerId == listOD[i].SellerId)
+                            {
+                                orderitem.OrderId = listOD[i].Id;
+                            }
+                        }
+                        db.OrderItem.Add(orderitem);
+                    }
+                    db.SaveChanges();
+                }
                 return RedirectToAction("MyCart");
             }
             else
             {
+                TempData["Message"] = "Invalid Session";
                 return RedirectToAction("MyCart");
             }
 
