@@ -245,7 +245,7 @@ namespace AlanCart.Controllers
         public ActionResult MyOrders()
         {
             return View();
-        }
+        }   
         public ActionResult DeleteProduct(string strproductid)
         {
             if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");  //還敢皮?直接給你登出
