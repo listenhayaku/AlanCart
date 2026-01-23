@@ -14,6 +14,12 @@ namespace AlanCart.Models
     
     public partial class ProductData
     {
+        public ProductData()
+        {
+            this.CartOfUser = new HashSet<CartOfUser>();
+            this.OrderItem = new HashSet<OrderItem>();
+        }
+    
         public int Id { get; set; }
         public string Productname { get; set; }
         public int Price { get; set; }
@@ -21,5 +27,9 @@ namespace AlanCart.Models
         public int Available { get; set; }
         public string ImgUrl { get; set; }
         public int SellerId { get; set; }
+    
+        public virtual ICollection<CartOfUser> CartOfUser { get; set; }
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
+        public virtual UserData UserData { get; set; }
     }
 }

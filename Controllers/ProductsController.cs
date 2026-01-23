@@ -191,62 +191,57 @@ namespace AlanCart.Controllers
             {
                 using (Models.AlanCartEntities db = new Models.AlanCartEntities())
                 {
-                    List<Models.CartOfUser> listcou = (from s in db.CartOfUser where s.UserId == userid select s).ToList();
-                    //一筆訂單只會有一個賣家，如果買家一次買2個人的，會自動分2筆
-                    //先建立訂單內容物資料
-                    List<Models.OrderItem> listorderitem = new List<Models.OrderItem>();
-                    //判斷到底要幾個訂單(有幾個賣家)用
-                    List<int> listseller = new List<int>();
-                    //為了知道有幾個賣家，需要這個... cartofuser.productid->product.id;product.seller->userdata.id;
-                    List<Models.ProductData> listproductdata = new List<Models.ProductData>();
-                    foreach (Models.CartOfUser cou in listcou)
+                    List<Models.CartOfUser> listCOU = (from s in db.CartOfUser where s.UserId == userid select s).ToList();
+                    List<Models.OrderData> listOD = new List<Models.OrderData>();
+                    List<Models.OrderItem> listOI = new List<Models.OrderItem>();
+                    //先單純建立OrderData
+                    foreach(Models.CartOfUser COU in listCOU)
                     {
                         Models.OrderItem orderitem = new Models.OrderItem();
-                        orderitem.ProductId = cou.ProductId;
-                        orderitem.Stock = cou.Stock;
+                        orderitem.ProductId = COU.ProductId;
+                        orderitem.Stock = COU.Stock;
                         orderitem.OrderStatus = 0;
-                        listorderitem.Add(orderitem);
+                        listOI.Add(orderitem);
 
-                        Models.ProductData productdata = (from s in db.ProductData where s.Id == cou.ProductId select s).FirstOrDefault();
-                        listproductdata.Add(productdata);
-                    }
-                    //取得所有賣家ID
-                    foreach(Models.ProductData productdata in listproductdata)
-                    {
-                        bool found = false;
-                        for (int i = 0;i < listseller.Count; i++)
+                        //OrderData
+                        int found = -1;
+                        for(int i =0;i < listOD.Count; i++)
                         {
-                            if (listseller[i] == productdata.SellerId)
+                            if (listOD[i].SellerId == COU.ProductData.SellerId)
                             {
-                                found = true;
-                                break;
+                                found = i;
                             }
                         }
-                        if(!found) listseller.Add(productdata.Id);
-                    }
-                    //建立訂單
-                    List<Models.OrderData> listorderdata = new List<Models.OrderData>();
-                    for(int i = 0;i < listseller.Count; i++)
-                    {
-                        Models.OrderData orderdata = new Models.OrderData();
-                        orderdata.SellerId = listseller[i];
-                        orderdata.BuyerId = userid;
-                        foreach(Models.OrderItem orderitem in listorderitem)
+                        if (found == -1)
                         {
-                            foreach(Models.ProductData productdata in listproductdata)
+                            Models.OrderData orderdata = new Models.OrderData();
+                            orderdata.SellerId = COU.ProductData.SellerId;
+                            orderdata.BuyerId = COU.UserId;
+                            orderdata.TotalAmount += COU.ProductData.Price * COU.Stock;
+                            orderdata.OrderStatus = 0;
+                            listOD.Add(orderdata);
+                        }
+                        else
+                        {
+                            listOD[found].TotalAmount += COU.ProductData.Price * COU.Stock;
+                        }
+                    }
+                    foreach (Models.OrderData orderdata in listOD) db.OrderData.Add(orderdata);
+                    db.SaveChanges();
+                    listOD = (from s in db.OrderData select s).ToList();
+                    foreach(Models.OrderItem orderitem in listOI)
+                    {
+                        for(int i = 0;i < listOD.Count; i++)
+                        {
+                            orderitem.ProductData = (from s in db.ProductData where s.Id == orderitem.ProductId select s).FirstOrDefault();
+                            if(orderitem.ProductData.SellerId == listOD[i].SellerId)
                             {
-                                if(orderitem.ProductId == productdata.Id)
-                                {
-                                    orderdata.TotalAmount += productdata.Price;
-                                }
+                                orderitem.OrderId = listOD[i].Id;
                             }
                         }
-                        orderdata.OrderStatus = 0;
-                        listorderdata.Add(orderdata);
-                        db.OrderData.Add(orderdata);
+                        db.OrderItem.Add(orderitem);
                     }
-                    //在這前面，沒辦先給orderitem.orderid，因為orderdata還沒存進db，沒有id
-                    
+                    db.SaveChanges();
                 }
                 return RedirectToAction("MyCart");
             }

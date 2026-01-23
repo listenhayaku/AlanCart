@@ -14,10 +14,19 @@ namespace AlanCart.Models
     
     public partial class OrderData
     {
+        public OrderData()
+        {
+            this.OrderItem = new HashSet<OrderItem>();
+        }
+    
         public int Id { get; set; }
         public int SellerId { get; set; }
         public int BuyerId { get; set; }
         public int TotalAmount { get; set; }
         public int OrderStatus { get; set; }
+    
+        public virtual UserData UserData { get; set; }
+        public virtual UserData UserData1 { get; set; }
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
     }
 }
