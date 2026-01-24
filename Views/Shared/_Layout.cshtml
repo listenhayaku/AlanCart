@@ -51,13 +51,13 @@
                     {
                         if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
                         {
-                            <li>@Html.ActionLink("MyOrders", "MyOrders", "Products")</li>
+                            <li>@Html.ActionLink("PendingShipments", "PendingShipments", "Orders")</li>
                             <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
                             <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
                             <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
                         }
-
                         <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
+                        <li>@Html.ActionLink("MyOrders", "MyOrders", "Orders")</li>
                     }
                 </ul>
             </div>

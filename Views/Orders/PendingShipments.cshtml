@@ -1,0 +1,18 @@
+﻿@model List<AlanCart.Models.OrderData>
+@{
+    ViewBag.Title = "PendingShipment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PendingShipment</h2>
+
+@foreach(AlanCart.Models.OrderData od in Model)
+            {
+                <a href="@Url.Action("")">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 panel panel-default">
+                        <div class="panel">
+                            Id:@od.Id
+                        </div>
+                    </div>
+                </a>
+            }

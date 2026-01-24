@@ -1,0 +1,29 @@
+﻿@model List<AlanCart.Models.OrderItem> 
+@{
+    ViewBag.Title = "MyOrderDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyOrderDetail</h2>
+
+
+<div class="row">
+    @foreach (AlanCart.Models.OrderItem orderitem in Model)
+    {
+        AlanCart.Models.ProductData pd = orderitem.ProductData;
+       
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-body">
+                <div class="panel-body">
+                    <h5>ItemId:@pd.Id</h5>
+                    <img src="@Url.Content(pd.ImgUrl)" class="img-responsive">
+                    <h5>ProductName:@pd.Productname</h5>
+                    <h5>OrderStatus:@orderitem.OrderStatus</h5>
+                    <div class="button-area">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

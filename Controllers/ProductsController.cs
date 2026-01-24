@@ -228,6 +228,7 @@ namespace AlanCart.Controllers
                     }
                     foreach (Models.OrderData orderdata in listOD) db.OrderData.Add(orderdata);
                     db.SaveChanges();
+                    //OrderItem
                     listOD = (from s in db.OrderData select s).ToList();
                     foreach(Models.OrderItem orderitem in listOI)
                     {
@@ -242,8 +243,12 @@ namespace AlanCart.Controllers
                         db.OrderItem.Add(orderitem);
                     }
                     db.SaveChanges();
+                    //CartOfUser清空
+                    foreach (Models.CartOfUser cou in listCOU) db.CartOfUser.Remove(cou);
+                    db.SaveChanges();
+                    TempData["Message"] = "Checkouted Successful";
+                    return RedirectToAction("MyCart");
                 }
-                return RedirectToAction("MyCart");
             }
             else
             {
@@ -296,10 +301,7 @@ namespace AlanCart.Controllers
                 return View(listpd);
             }
         }
-        public ActionResult MyOrders()
-        {
-            return View();
-        }   
+
         public ActionResult DeleteProduct(string strproductid)
         {
             if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");  //還敢皮?直接給你登出

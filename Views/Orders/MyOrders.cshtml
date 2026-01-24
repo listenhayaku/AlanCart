@@ -1,0 +1,36 @@
+﻿@model List<AlanCart.Models.OrderData>
+@{
+    ViewBag.Title = "MyOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyOrders</h2>
+
+@foreach(AlanCart.Models.OrderData od in Model)
+{
+    <a href="@Url.Action("MyOrderDetail",new { strorderdataid = od.Id })">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 panel panel-default">
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <td>
+                            Id:@od.Id
+                        </td>
+                        <td>
+                            SellerId:@od.SellerId
+                        </td>
+                        <td>
+                            BuyerId:@od.BuyerId
+                        </td>
+                        <td>
+                            TotalAmount:@od.TotalAmount
+                        </td>
+                        <td>
+                            OrderStatus:@od.OrderStatus
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </a>
+}
