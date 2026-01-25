@@ -18,10 +18,10 @@
                     <h5>ItemId:@pd.Id</h5>
                     <img src="@Url.Content(pd.ImgUrl)" class="img-responsive">
                     <h5>ProductName:@pd.Productname</h5>
+                    <h5>Price:@pd.Price</h5>
+                    <h5>Stock:@orderitem.Stock</h5>
+                    <h5>Amount:@(pd.Price*orderitem.Stock)</h5>
                     <h5>OrderStatus:@orderitem.OrderStatus</h5>
-                    <div class="button-area">
-                        <button type="button" class="btn btn-primary">Edit</button>
-                    </div>
                 </div>
             </div>
         </div>

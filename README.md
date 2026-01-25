@@ -10,7 +10,7 @@ admin可以用reset重設一般使用者的密碼
 
 ### 當前進度
 
-新增商品物流進度
+新增商品物流進度 > 可由賣家改物流進度了
 把驗證方式改成用annotation(ActionFilter)
 
 

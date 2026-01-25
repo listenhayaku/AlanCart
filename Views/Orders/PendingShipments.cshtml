@@ -6,9 +6,14 @@
 
 <h2>PendingShipment</h2>
 
+@if(ViewBag.Message != null)
+{
+    <h5 class="alert-info">@ViewBag.Message</h5>
+}
+
 @foreach(AlanCart.Models.OrderData od in Model)
             {
-                <a href="@Url.Action("")">
+                <a href="@Url.Action("PendingShipmentDetail",new {strorderdataid=od.Id})">
                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 panel panel-default">
                         <div class="panel">
                             Id:@od.Id

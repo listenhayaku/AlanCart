@@ -1,0 +1,31 @@
+﻿@model List<AlanCart.Models.OrderItem>
+@{
+    ViewBag.Title = "PendingShipmentDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PendingShipmentDetail</h2>
+
+<div class="row">
+    @using(Html.BeginForm("EditOrderStatus", "Orders", FormMethod.Post)){
+        foreach (AlanCart.Models.OrderItem orderitem in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h5>orderitemid:@orderitem.Id</h5>
+                        @Html.Hidden("strorderitemid", orderitem.Id);
+                        <img src="@Url.Content(orderitem.ProductData.ImgUrl)" class="img-responsive" />
+                        <h5>Productname:@orderitem.ProductData.Productname</h5>
+                        <h5>Stock:@orderitem.Stock</h5>
+                        <h5>Amount:@(orderitem.Stock*orderitem.ProductData.Price)</h5>
+                        <h5>OrderStatus:<input type="text" name="strorderstatuscode" value="@orderitem.OrderStatus" /></h5>
+                        <button class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@Html.ActionLink("Back", "PendingShipments",null,new {@class="btn btn-primary"});

@@ -239,6 +239,7 @@
     <Content Include="Views\Orders\MyOrders.cshtml" />
     <Content Include="Views\Orders\PendingShipments.cshtml" />
     <Content Include="Views\Orders\MyOrderDetail.cshtml" />
+    <Content Include="Views\Orders\PendingShipmentDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
