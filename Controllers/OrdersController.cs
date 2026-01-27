@@ -48,7 +48,7 @@ namespace AlanCart.Controllers
             using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
                 List<Models.OrderData> listOD = (from s in db.OrderData where s.SellerId == userid select s).ToList();
-                ViewBag.Messag = TempData["Message"];
+                ViewBag.Message = TempData["Message"];
                 return View(listOD);
             }
         }
@@ -64,40 +64,76 @@ namespace AlanCart.Controllers
             }
             using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
-                List<Models.OrderItem> listOI = (from s in db.OrderItem where s.OrderData.SellerId == userid && s.OrderId == orderdataid select s).Include(s => s.ProductData).ToList();
+                List<Models.OrderItem> listOI = (from s in db.OrderItem where s.OrderData.SellerId == userid && s.OrderId == orderdataid select s).Include(s => s.ProductData).Include(s=>s.OrderData).ToList();
+                ModelState.Clear();
                 return View(listOI);
             }
         }
         [HttpPost]
-        public ActionResult EditOrderStatus(string strorderitemid,string strorderstatuscode)
+        public ActionResult EditOrderStatus(string strgenericid,string strorderstatuscode,string strtrigger)    //
         {
             if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");
-            int.TryParse(Session["Id"].ToString(), out int userid);
-            if (!int.TryParse(strorderitemid, out int orderitemid))
+            if(strtrigger == "orderitem")   //這邊設計成2種方式，1. 想改orderitem 2. 想改orderdata
             {
-                TempData["Message"] = "Invalid Parameter";
-                return RedirectToAction("PendingShipmentDetail");
-            }
-            if (!int.TryParse(strorderstatuscode, out int orderstatuscode))
-            {
-                TempData["Message"] = "Invalid Parameter";
-                return RedirectToAction("PendingShipmentDetail");
-            }
-            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
-            {
-                Models.OrderItem orderitem = (from s in db.OrderItem where s.Id == orderitemid && s.ProductData.SellerId == userid select s).FirstOrDefault();
-                if(orderitem == default(Models.OrderItem))
+                int.TryParse(Session["Id"].ToString(), out int userid);
+                if (!int.TryParse(strgenericid, out int orderitemid))
                 {
-                    TempData["Message"] = "Item not found";
-                    return RedirectToAction("PendingShipmentDetail");
+                    TempData["Message"] = "Invalid Parameter";
+                    return RedirectToAction("PendingShipments");
                 }
-                if(orderstatuscode >= 0 && orderstatuscode < 3) //can be only 1,2,3
+                if (!int.TryParse(strorderstatuscode, out int orderstatuscode))
                 {
-                    orderitem.OrderStatus = orderstatuscode;
+                    TempData["Message"] = "Invalid Parameter";
+                    return RedirectToAction("PendingShipments");
                 }
-                db.SaveChanges();
-                return RedirectToAction("PendingShipmentDetail");
+                using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+                {
+                    Models.OrderItem orderitem = (from s in db.OrderItem where s.Id == orderitemid && s.ProductData.SellerId == userid select s).FirstOrDefault();
+                    if (orderitem == default(Models.OrderItem))
+                    {
+                        TempData["Message"] = "Item not found";
+                        return RedirectToAction("PendingShipments");
+                    }
+                    if (orderstatuscode >= 0 && orderstatuscode < 3) //can be only 1,2,3
+                    {
+                        orderitem.OrderStatus = orderstatuscode;
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("PendingShipments");
+                }
+            }
+            else if(strtrigger == "orderdata")
+            {
+                int.TryParse(Session["Id"].ToString(), out int userid);
+                if(!int.TryParse(strgenericid,out int orderdataid))
+                {
+                    TempData["Message"] = "Invalid Parameter";
+                    return RedirectToAction("PendingShipments");
+                }
+                if (!int.TryParse(strorderstatuscode, out int orderstatuscode))
+                {
+                    TempData["Message"] = "Invalid Parameter";
+                    return RedirectToAction("PendingShipments");
+                }
+                using(Models.AlanCartEntities db = new Models.AlanCartEntities())
+                {
+                    Models.OrderData orderdata = (from s in db.OrderData where s.Id == orderdataid select s).FirstOrDefault();
+                    if(orderdata == default(Models.OrderData) || orderdata.SellerId != userid)
+                    {
+                        TempData["Message"] = "this order is not yours";
+                        return RedirectToAction("PendingShipments");
+                    }
+                    orderdata.OrderStatus = orderstatuscode;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("PendingShipments");
+            }
+            else
+            {
+                TempData["Message"] = "Trigger Error";
+                return RedirectToAction("PendingShipments");
             }
         }
+
     }
 }

@@ -6,15 +6,27 @@
 
 <h2>PendingShipmentDetail</h2>
 
+
+@using (Html.BeginForm("EditOrderStatus", "Orders", FormMethod.Post))
+{
+    @Html.Hidden("strtrigger", "orderdata")
+    @Html.Hidden("strgenericid", Model[0].OrderData.Id)
+    @Html.TextBox("strorderstatuscode", Model[0].OrderData.OrderStatus)
+    <button class="btn btn-primary">Edit</button>
+}
+
+
 <div class="row">
-    @using(Html.BeginForm("EditOrderStatus", "Orders", FormMethod.Post)){
+    @using (Html.BeginForm("EditOrderStatus", "Orders", FormMethod.Post))
+    {
         foreach (AlanCart.Models.OrderItem orderitem in Model)
         {
+            @Html.Hidden("strtrigger", "orderitem")
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h5>orderitemid:@orderitem.Id</h5>
-                        @Html.Hidden("strorderitemid", orderitem.Id);
+                        @Html.Hidden("strgenericid", orderitem.Id);
                         <img src="@Url.Content(orderitem.ProductData.ImgUrl)" class="img-responsive" />
                         <h5>Productname:@orderitem.ProductData.Productname</h5>
                         <h5>Stock:@orderitem.Stock</h5>
@@ -28,4 +40,7 @@
     }
 </div>
 
-@Html.ActionLink("Back", "PendingShipments",null,new {@class="btn btn-primary"});
+
+
+
+@Html.ActionLink("Back", "PendingShipments", null, new { @class = "btn btn-primary" });

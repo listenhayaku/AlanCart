@@ -34,11 +34,15 @@
                 }
                 else
                 {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("UpdatePassword", "UpdatePassword", "Register")</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Register")</li>
-                        <li style="color:white;">歡迎，@Session["Nickname"]</li>
-                    </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Convert.ToInt32(Session["Role"].ToString()) == (int)UserRole.Administrator)
+                    {
+                        <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
+                    }
+                    <li>@Html.ActionLink("UpdatePassword", "UpdatePassword", "Register")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Register")</li>
+                    <li style="color:white;">歡迎，@Session["Nickname"]</li>
+                </ul>
                 }
             </div>
         </div>
@@ -54,7 +58,7 @@
                             <li>@Html.ActionLink("PendingShipments", "PendingShipments", "Orders")</li>
                             <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
                             <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
-                            <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
+
                         }
                         <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
                         <li>@Html.ActionLink("MyOrders", "MyOrders", "Orders")</li>
