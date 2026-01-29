@@ -22,8 +22,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("首頁", "Index", "Home")</li>
-                    <li>@Html.ActionLink("關於", "About", "Home")</li>
-                    <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
                 </ul>
                 @if (Session["Username"] == null)
                 {
@@ -48,27 +46,28 @@
         </div>
     </div>
     <div class="container body-content">
-        <div class="row">
-            <div class="col-sm-3 col-md-2" style="background-color: black;min-height: 100vh;">
-                <ul class="nav nav-pills nav-stacked">
-                    @if (Session["Username"] != null)
-                    {
-                        if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
+        <div class="row my_container">
+            @if (Session["Username"] != null)
+            {
+                <div class="my_nav_sidebar" style="">
+                    <ul class="nav nav-pills nav-stacked">
+                        @if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
                         {
-                            <li>@Html.ActionLink("PendingShipments", "PendingShipments", "Orders")</li>
-                            <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
-                            <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
+                        <li>@Html.ActionLink("PendingShipments", "PendingShipments", "Orders")</li>
+                        <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
+                        <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
 
                         }
                         <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
                         <li>@Html.ActionLink("MyOrders", "MyOrders", "Orders")</li>
-                    }
-                </ul>
+                        
+                    </ul>
+                </div>
+            }
+                <div class="" style="">
+                    @RenderBody()
+                </div>
             </div>
-            <div class="col-sm-9 col-md-10">
-                @RenderBody()
-            </div>
-        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

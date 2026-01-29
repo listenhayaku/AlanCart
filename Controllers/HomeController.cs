@@ -13,19 +13,5 @@ namespace AlanCart.Controllers
             if (Session["Username"] == null) return RedirectToAction("SignIn", "Register");
             else return RedirectToAction("Index","Products");
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

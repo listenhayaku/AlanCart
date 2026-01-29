@@ -1,0 +1,32 @@
+﻿*{
+    
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+}
+
+body div.container{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+body div.container ul.nav *{
+    color: white;
+}
+
+body img {
+    display: block;
+    height: 20vh;
+    max-width: 100%;
+}
+
+.my_container{
+    display:flex;
+}
+
+.my_nav_sidebar{
+    background-color: black;
+    width: 20%;
+}

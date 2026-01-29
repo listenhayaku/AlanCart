@@ -16,11 +16,11 @@
     {
         using(Html.BeginForm("EditProduct", "Products", FormMethod.Post))
         {
-            <div class="col-xs-12 col-md-6 col-lg-3">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         @Html.Hidden("Id", 123)
-                        <img src="@Url.Content(pd.ImgUrl)" alt="Alternate Text" class="img-responsive" />
+                        <img src="@Url.Content(pd.ImgUrl)" alt="Alternate Text" class="" />
                         <h5>Productname:@pd.Productname</h5>
                         <h5>Price:@pd.Price</h5>
                         <h5>Stock:@pd.Stock</h5>
