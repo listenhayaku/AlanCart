@@ -14,6 +14,11 @@
 </style>
 
 <h2>MyCart</h2>
+@if(ViewBag.Test != null)
+{
+    <h5>@ViewBag.Test</h5>
+}
+
 @if(ViewBag.Message != null)
 {
     <h5 class="alert-info">@ViewBag.Message</h5>
@@ -24,11 +29,12 @@
 
     @foreach (MyCartViewModel item in Model)
     {
-        using (Html.BeginForm("EditCart", "Products", FormMethod.Post))
-        {
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @using (Html.BeginForm("EditCart", "Products", FormMethod.Post))
+                    {
+
                         <h5>ItemId:@item.CartOfUserId</h5>
                         <img src="@Url.Content(item.ImgUrl)" class="img-responsive">
                         <h5>ProductName:@item.ProductName</h5>
@@ -42,12 +48,13 @@
                                 <button type="submit" class="btn btn-success">Save</button>
                                 @Html.ActionLink("Delete", Url.Content("DeleteItem"), new { strcartofuserid = item.CartOfUserId }, new { @class = "btn btn-danger" })
                             </div>
-                        <button type="button" class="btn btn-primary">Edit</button>
+                            <button type="button" class="btn btn-primary">Edit</button>
                         </div>
-                    </div>
+
+                    }
                 </div>
             </div>
-        }
+        </div>
     }
 
 </div>

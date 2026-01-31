@@ -1,24 +1,25 @@
-﻿
+﻿@using System.Globalization; 
+@using System.Threading;
 @{
     ViewBag.Title = "SignIn";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>SignIn</h2>
+<h2>@AlanCart.Resources.Lang.SignIn</h2>
 
-@if(ViewBag.Message != null)
+@if (ViewBag.Message != null)
 {
     <h5 class="alert-info">@ViewBag.Message</h5>
 }
 
 @using (Html.BeginForm("SignIn", "Register", FormMethod.Post))
 {
-    @Html.Label("Username")
+    @Html.Label(AlanCart.Resources.Lang.username)
     @Html.TextBox("Username")
-    @Html.Label("Password")
+    @Html.Label(AlanCart.Resources.Lang.password)
     @Html.TextBox("Password")
 
-    <input type="submit" class="btn btn-primary"/>
+    <input type="submit" class="btn btn-primary" />
 }
 
 

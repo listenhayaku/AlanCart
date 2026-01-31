@@ -6,19 +6,16 @@
 
 <h2>MyProducts</h2>
 
-@if(ViewBag.Message != null)
-{
-    <h5 class="alert-info">@ViewBag.Message</h5>
-}
-
 <div class="row">
     @foreach (AlanCart.Models.ProductData pd in Model)
     {
-        using(Html.BeginForm("EditProduct", "Products", FormMethod.Post))
-        {
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @using (Html.BeginForm("EditProduct", "Products", FormMethod.Post))
+                    {
+
+
                         @Html.Hidden("Id", 123)
                         <img src="@Url.Content(pd.ImgUrl)" alt="Alternate Text" class="" />
                         <h5>Productname:@pd.Productname</h5>
@@ -34,9 +31,9 @@
                         <button class="btn btn-success">Save</button>
                         <a href="@Url.Action("DeleteProduct", new { strproductid = pd.Id })" class="btn btn-danger">Delete</a>
                         <button type="button" class="btn btn-primary">Edit/Cancel</button>
-                    </div>
+                    }
                 </div>
             </div>
-            }
-        }
+        </div>
+    }
 </div>

@@ -26,8 +26,8 @@
                 @if (Session["Username"] == null)
                 {
                     <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("SignIn", "SignIn", "Register")</li>
-                        <li>@Html.ActionLink("SignUp", "SignUp", "Register")</li>
+                        <li>@Html.ActionLink(AlanCart.Resources.Lang.SignIn, "SignIn", "Register")</li>
+                        <li>@Html.ActionLink(AlanCart.Resources.Lang.SignUp, "SignUp", "Register")</li>
                     </ul>
                 }
                 else
@@ -37,15 +37,15 @@
                     {
                         <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
                     }
-                    <li>@Html.ActionLink("UpdatePassword", "UpdatePassword", "Register")</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Register")</li>
+                    <li>@Html.ActionLink(AlanCart.Resources.Lang.UpdatePassword, "UpdatePassword", "Register")</li>
+                    <li>@Html.ActionLink(AlanCart.Resources.Lang.Logout, "Logout", "Register")</li>
                     <li style="color:white;">歡迎，@Session["Nickname"]</li>
                 </ul>
                 }
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content my_root_conainer">
         <div class="row my_container">
             @if (Session["Username"] != null)
             {
@@ -58,13 +58,13 @@
                         <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
 
                         }
-                        <li>@Html.ActionLink("MyCart", "MyCart", "Products")</li>
-                        <li>@Html.ActionLink("MyOrders", "MyOrders", "Orders")</li>
+                        <li>@Html.ActionLink(AlanCart.Resources.Lang.MyCart, "MyCart", "Products")</li>
+                        <li>@Html.ActionLink(AlanCart.Resources.Lang.MyOrders, "MyOrders", "Orders")</li>
                         
                     </ul>
                 </div>
             }
-                <div class="" style="">
+                <div class="container" style="">
                     @RenderBody()
                 </div>
             </div>

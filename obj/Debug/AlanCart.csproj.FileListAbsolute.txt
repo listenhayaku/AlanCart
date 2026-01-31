@@ -87,3 +87,8 @@ D:\Language\Projects\AlanCart\obj\Debug\AlanCart.csproj.CoreCompileInputs.cache
 D:\Language\Projects\AlanCart\obj\Debug\AlanCart.csproj.CopyComplete
 D:\Language\Projects\AlanCart\obj\Debug\AlanCart.dll
 D:\Language\Projects\AlanCart\obj\Debug\AlanCart.pdb
+D:\Language\Projects\AlanCart\obj\Debug\AlanCart.Resources.Lang.resources
+D:\Language\Projects\AlanCart\obj\Debug\AlanCart.csproj.GenerateResource.cache
+D:\Language\Projects\AlanCart\bin\zh-TW\AlanCart.resources.dll
+D:\Language\Projects\AlanCart\obj\Debug\AlanCart.Resources.Lang.zh-TW.resources
+D:\Language\Projects\AlanCart\obj\Debug\zh-TW\AlanCart.resources.dll

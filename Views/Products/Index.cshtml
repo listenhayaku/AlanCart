@@ -12,30 +12,31 @@
 }
 
 <div class="row">
-    @foreach(ProductData pd in Model)
+    @foreach (ProductData pd in Model)
     {
-        using (Html.BeginForm("AddToCart", "Products", FormMethod.Post))
-        {
-            @Html.Hidden("ProductId",pd.Id)
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img src="@Url.Content(@pd.ImgUrl)" class="" />
-                        <h5>Productname:@pd.Productname</h5>
-                        <h5>Price:@pd.Price</h5>
-                        <h5>Stock: @pd.Stock</h5>
-                        <h5>Seller:@pd.SellerId</h5>
-                        <div>
-                            <button class="btn btn-default" type="button">-</button>
-                            <input type="text" name="Quantity" value="1" />
-                            <button class="btn btn-default" type="button">+</button>
-                        </div>
-                        <input type="submit" value="Add To Cart" class="btn btn-primary" /> 
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @using (Html.BeginForm("AddToCart", "Products", FormMethod.Post))
+                    {
+                    @Html.Hidden("ProductId", pd.Id)
+
+                    <img src="@Url.Content(@pd.ImgUrl)" class="" />
+                    <h5>Productname:@pd.Productname</h5>
+                    <h5>Price:@pd.Price</h5>
+                    <h5>Stock: @pd.Stock</h5>
+                    <h5>Seller:@pd.SellerId</h5>
+                    <div>
+                        <button class="btn btn-default" type="button">-</button>
+                        <input type="text" name="Quantity" value="1" />
+                        <button class="btn btn-default" type="button">+</button>
                     </div>
+                    <input type="submit" value="Add To Cart" class="btn btn-primary" />
+                    }
                 </div>
             </div>
-        }
-    }    
+        </div>
+    }
 </div>
 
 <script>

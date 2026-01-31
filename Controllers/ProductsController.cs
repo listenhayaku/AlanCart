@@ -76,6 +76,7 @@ namespace AlanCart.Controllers
         public ActionResult MyCart()
         {
             if (!Services.Security.IsValidSession(Session)) return RedirectToAction("SignIn", "Register");
+            ViewBag.Test = "test";
             using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
                 string username = Session["Username"].ToString();

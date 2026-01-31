@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlanCart.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,7 @@ namespace AlanCart.Controllers
         public ActionResult SignIn()
         {
             if (TempData["Message"] != null) ViewBag.Message = TempData["Message"];
+       
             return View();
         }
         [HttpPost]
