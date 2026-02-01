@@ -32,15 +32,17 @@
                 }
                 else
                 {
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Convert.ToInt32(Session["Role"].ToString()) == (int)UserRole.Administrator)
-                    {
-                        <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
-                    }
-                    <li>@Html.ActionLink(AlanCart.Resources.Lang.UpdatePassword, "UpdatePassword", "Register")</li>
-                    <li>@Html.ActionLink(AlanCart.Resources.Lang.Logout, "Logout", "Register")</li>
-                    <li style="color:white;">歡迎，@Session["Nickname"]</li>
-                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (Convert.ToInt32(Session["Role"].ToString()) == (int)UserRole.Administrator)
+                {
+                    <li>@Html.ActionLink("EditUser", "UserList", "User")</li>
+                }
+
+                <li>@Html.ActionLink(AlanCart.Resources.Lang.Config, "Config", "User")</li>
+                <li>@Html.ActionLink(AlanCart.Resources.Lang.UpdatePassword, "UpdatePassword", "Register")</li>
+                <li>@Html.ActionLink(AlanCart.Resources.Lang.Logout, "Logout", "Register")</li>
+                <li style="color:white;">歡迎，@Session["Nickname"]</li>
+            </ul>
                 }
             </div>
         </div>
@@ -53,14 +55,15 @@
                     <ul class="nav nav-pills nav-stacked">
                         @if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
                         {
-                        <li>@Html.ActionLink("PendingShipments", "PendingShipments", "Orders")</li>
-                        <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
-                        <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
+                            <li>@Html.ActionLink("PendingShipments", "PendingShipments", "Orders")</li>
+                            <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
+                            <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
 
                         }
                         <li>@Html.ActionLink(AlanCart.Resources.Lang.MyCart, "MyCart", "Products")</li>
                         <li>@Html.ActionLink(AlanCart.Resources.Lang.MyOrders, "MyOrders", "Orders")</li>
-                        
+                        <li>@Html.ActionLink(AlanCart.Resources.Lang.Contact, "Contact", "Chat")</li>
+
                     </ul>
                 </div>
             }

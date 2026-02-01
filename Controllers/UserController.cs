@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using System.Threading;
+using System.Globalization;
+
 namespace AlanCart.Controllers
 {
     public class UserController : Controller
@@ -39,14 +42,14 @@ namespace AlanCart.Controllers
         [HttpPost]
         public ActionResult EditUser(Models.UserData userdata)
         {
-            if(!(Services.Security.IsValidSession(Session) && Services.Security.IsQualifiedUser(Session, UserRole.Administrator))){
+            if (!(Services.Security.IsValidSession(Session) && Services.Security.IsQualifiedUser(Session, UserRole.Administrator))) {
                 TempData["Message"] = "Invalid Session or User";
                 return RedirectToAction("EditUser");
             }
-            using(Models.AlanCartEntities db = new Models.AlanCartEntities())
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
                 Models.UserData ud = (from s in db.UserData where (s.Id == userdata.Id && s.Username == userdata.Username) select s).FirstOrDefault();
-                if(ud == default(Models.UserData))
+                if (ud == default(Models.UserData))
                 {
                     TempData["Message"] = "Cannot find userdata";
                     return RedirectToAction("EditUser");
@@ -57,6 +60,30 @@ namespace AlanCart.Controllers
                 TempData["Message"] = "EditUser successful";
                 return RedirectToAction("UserList");
             }
+        }
+        //使用者自己帳號的設定
+        public ActionResult Config()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SetLanguage(string SetLanguage)
+        {
+            if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");
+            switch(SetLanguage)
+            {
+                case "zh-TW":
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("zh-TW");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("zh-TW");
+                    break;
+                case "en-US":
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+                    break;
+            }
+            return RedirectToAction("Config");
         }
     }
 }

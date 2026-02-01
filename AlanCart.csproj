@@ -126,6 +126,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -249,6 +250,9 @@
     <Content Include="Views\Orders\PendingShipments.cshtml" />
     <Content Include="Views\Orders\MyOrderDetail.cshtml" />
     <Content Include="Views\Orders\PendingShipmentDetail.cshtml" />
+    <Content Include="Views\User\Config.cshtml" />
+    <Content Include="Views\Chat\Contact.cshtml" />
+    <Content Include="Views\Chat\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

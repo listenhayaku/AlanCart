@@ -21,7 +21,7 @@ namespace AlanCart.Controllers
             int.TryParse(Session["Id"].ToString(), out int userid);
             using (Models.AlanCartEntities db = new Models.AlanCartEntities())
             {
-                List<Models.OrderData> listOD = (from s in db.OrderData where s.BuyerId == userid select s).ToList();
+                List<Models.OrderData> listOD = (from s in db.OrderData where s.BuyerId == userid select s).Include(s => s.UserData1).ToList();
                 return View(listOD);
             }
         }

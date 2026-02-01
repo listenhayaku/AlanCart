@@ -61,6 +61,51 @@ namespace AlanCart.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Apply 的當地語系化字串。
+        /// </summary>
+        public static string Apply {
+            get {
+                return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Buyer 的當地語系化字串。
+        /// </summary>
+        public static string Buyer {
+            get {
+                return ResourceManager.GetString("Buyer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Config 的當地語系化字串。
+        /// </summary>
+        public static string Config {
+            get {
+                return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Contact 的當地語系化字串。
+        /// </summary>
+        public static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 en-US 的當地語系化字串。
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Logout 的當地語系化字串。
         /// </summary>
         public static string Logout {
@@ -88,11 +133,38 @@ namespace AlanCart.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 OrderStatus 的當地語系化字串。
+        /// </summary>
+        public static string OrderStatus {
+            get {
+                return ResourceManager.GetString("OrderStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 password 的當地語系化字串。
         /// </summary>
         public static string password {
             get {
                 return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Seller 的當地語系化字串。
+        /// </summary>
+        public static string Seller {
+            get {
+                return ResourceManager.GetString("Seller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 SetLanguage 的當地語系化字串。
+        /// </summary>
+        public static string SetLanguage {
+            get {
+                return ResourceManager.GetString("SetLanguage", resourceCulture);
             }
         }
         
@@ -111,6 +183,24 @@ namespace AlanCart.Resources {
         public static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 TotalAmount 的當地語系化字串。
+        /// </summary>
+        public static string TotalAmount {
+            get {
+                return ResourceManager.GetString("TotalAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 繁體中文 的當地語系化字串。
+        /// </summary>
+        public static string Traditional {
+            get {
+                return ResourceManager.GetString("Traditional", resourceCulture);
             }
         }
         

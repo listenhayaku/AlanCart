@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>MyOrders</h2>
+<h2>@AlanCart.Resources.Lang.MyOrders</h2>
 
 @foreach(AlanCart.Models.OrderData od in Model)
 {
@@ -17,16 +17,28 @@
                             Id:@od.Id
                         </td>
                         <td>
-                            SellerId:@od.SellerId
+                            @AlanCart.Resources.Lang.Seller:@od.UserData1.Nickname
                         </td>
                         <td>
-                            BuyerId:@od.BuyerId
+                            @AlanCart.Resources.Lang.TotalAmount:@od.TotalAmount
                         </td>
                         <td>
-                            TotalAmount:@od.TotalAmount
-                        </td>
-                        <td>
-                            OrderStatus:@od.OrderStatus
+                            @AlanCart.Resources.Lang.OrderStatus
+                            @switch (od.OrderStatus)
+                            {
+                                case 0:
+                                    @:havn't began
+                                    break;
+                                case 1:
+                                    @:processing
+                                    break;
+                                case 2:
+                                    @:done!
+                                    break;
+                                default:
+                                    @:what?
+                                    break;
+                                }
                         </td>
                     </tr>
                 </table>

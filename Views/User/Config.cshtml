@@ -1,0 +1,25 @@
+﻿@using System.Globalization
+@using System.Threading
+@{
+    ViewBag.Title = "Config";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Config</h2>
+
+
+<div class="row">
+    <h5>
+        @AlanCart.Resources.Lang.SetLanguage
+    </h5>
+    @using (Html.BeginForm("SetLanguage", "User", FormMethod.Post))
+    {
+        <select name="SetLanguage" class="form-control">
+            <option value"en-US">@AlanCart.Resources.Lang.English</option>
+            <option value"zh-TW">@AlanCart.Resources.Lang.Traditional</option>
+        </select>
+        <button class="btn btn-primary">@AlanCart.Resources.Lang.Apply</button>
+    }
+
+</div>

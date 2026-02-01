@@ -36,3 +36,37 @@ body img {
     width: 20%;
 }
 
+
+body.chatbox{
+    width: 100%;
+    height: 100%;
+    text-align:center;
+    margin: unset;
+    box-sizing:border-box;
+}
+
+body.chatbox div{
+    width: 100%;
+}
+
+body.chatbox .chatbox-title{
+    background-color: purple;
+}
+
+body.chatbox .chatbox-container{
+    display: flex;
+}
+body.chatbox input{
+    width: 100%;
+    background-color: gray;
+    border: unset;
+}
+
+body.chatbox button{
+    border: unset;
+    transition: ease-in 0.5s;
+}
+
+body.chatbox button:hover{
+    background-color: #aea3a3;
+}

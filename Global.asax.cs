@@ -22,6 +22,14 @@ namespace AlanCart
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //Thread.CurrentThread.CurrentCulture = new CultureInfo("zh-TW");
             //Thread.CurrentThread.CurrentUICulture= new CultureInfo("zh-TW");
+
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            //Thread.CurrentThread.CurrentUICulture= new CultureInfo("en-US");
+        }
+
+        protected void Application_BeginRequest()
+        {
+
         }
     }
 }
