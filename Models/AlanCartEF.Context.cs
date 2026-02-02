@@ -30,5 +30,6 @@ namespace AlanCart.Models
         public DbSet<CartOfUser> CartOfUser { get; set; }
         public DbSet<OrderData> OrderData { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
+        public DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

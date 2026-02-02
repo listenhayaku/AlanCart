@@ -18,6 +18,8 @@
     <Property Name="BuyerId" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="int" Nullable="false" />
     <Property Name="OrderStatus" Type="int" Nullable="false" />
+    <Property Name="IsBuyerConfirmed" Type="bit" Nullable="false" />
+    <Property Name="IsSellerClosed" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderItem">
     <Key>
@@ -40,6 +42,16 @@
     <Property Name="Stock" Type="int" Nullable="false" />
     <Property Name="Available" Type="int" Nullable="false" />
     <Property Name="ImgUrl" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="UserData">
     <Key>
@@ -140,6 +152,7 @@
     <EntitySet Name="OrderData" EntityType="Self.OrderData" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductData" EntityType="Self.ProductData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_CartOfUser_ProductData" Association="Self.FK_CartOfUser_ProductData">
       <End Role="ProductData" EntitySet="ProductData" />

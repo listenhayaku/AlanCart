@@ -207,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Models\AlanCartEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -235,6 +236,9 @@
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductData.Custom.cs" />
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserData.cs">
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
@@ -326,6 +330,10 @@
     <Content Include="Views\User\Config.cshtml" />
     <Content Include="Views\Chat\Contact.cshtml" />
     <Content Include="Views\Chat\Chat.cshtml" />
+    <Content Include="Views\Orders\OrderHistories.cshtml" />
+    <Content Include="Views\Orders\OrderHistoryDetail.cshtml" />
+    <Content Include="Views\Orders\CompletedShipments.cshtml" />
+    <Content Include="Views\Orders\CompletedShipmentDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

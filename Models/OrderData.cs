@@ -24,6 +24,8 @@ namespace AlanCart.Models
         public int BuyerId { get; set; }
         public int TotalAmount { get; set; }
         public int OrderStatus { get; set; }
+        public bool IsBuyerConfirmed { get; set; }
+        public bool IsSellerClosed { get; set; }
     
         public virtual UserData UserData { get; set; }
         public virtual UserData UserData1 { get; set; }

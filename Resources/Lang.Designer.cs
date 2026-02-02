@@ -79,6 +79,33 @@ namespace AlanCart.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 BuyerConfirm 的當地語系化字串。
+        /// </summary>
+        public static string BuyerConfirm {
+            get {
+                return ResourceManager.GetString("BuyerConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 CompletedShipmentDetail 的當地語系化字串。
+        /// </summary>
+        public static string CompletedShipmentDetail {
+            get {
+                return ResourceManager.GetString("CompletedShipmentDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 CompletedShipments 的當地語系化字串。
+        /// </summary>
+        public static string CompletedShipments {
+            get {
+                return ResourceManager.GetString("CompletedShipments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Config 的當地語系化字串。
         /// </summary>
         public static string Config {
@@ -129,6 +156,24 @@ namespace AlanCart.Resources {
         public static string MyOrders {
             get {
                 return ResourceManager.GetString("MyOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 OrderHistories 的當地語系化字串。
+        /// </summary>
+        public static string OrderHistories {
+            get {
+                return ResourceManager.GetString("OrderHistories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 OrderHistoryDetail 的當地語系化字串。
+        /// </summary>
+        public static string OrderHistoryDetail {
+            get {
+                return ResourceManager.GetString("OrderHistoryDetail", resourceCulture);
             }
         }
         

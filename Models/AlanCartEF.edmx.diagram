@@ -17,6 +17,7 @@
         <AssociationConnector Association="AlanCartModel.FK_OrderItem_OrderData" />
         <AssociationConnector Association="AlanCartModel.FK_OrderItem_ProductData" />
         <AssociationConnector Association="AlanCartModel.FK_ProductData_UserData" />
+        <EntityTypeShape EntityType="AlanCartModel.sysdiagrams" Width="1.5" PointX="3.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

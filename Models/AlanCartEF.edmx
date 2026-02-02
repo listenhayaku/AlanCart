@@ -23,6 +23,8 @@
           <Property Name="BuyerId" Type="int" Nullable="false" />
           <Property Name="TotalAmount" Type="int" Nullable="false" />
           <Property Name="OrderStatus" Type="int" Nullable="false" />
+          <Property Name="IsBuyerConfirmed" Type="bit" Nullable="false" />
+          <Property Name="IsSellerClosed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderItem">
           <Key>
@@ -45,6 +47,16 @@
           <Property Name="Stock" Type="int" Nullable="false" />
           <Property Name="Available" Type="int" Nullable="false" />
           <Property Name="ImgUrl" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="UserData">
           <Key>
@@ -145,6 +157,7 @@
           <EntitySet Name="OrderData" EntityType="Self.OrderData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductData" EntityType="Self.ProductData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CartOfUser_ProductData" Association="Self.FK_CartOfUser_ProductData">
             <End Role="ProductData" EntitySet="ProductData" />
@@ -213,6 +226,7 @@
             <End Role="UserData" EntitySet="UserData" />
             <End Role="ProductData" EntitySet="ProductData" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="AlanCartModel.sysdiagrams" />
         </EntityContainer>
         <EntityType Name="UserData">
           <Key>
@@ -266,6 +280,8 @@
           <NavigationProperty Name="UserData" Relationship="AlanCartModel.FK_OrderData_UserData" FromRole="OrderData" ToRole="UserData" />
           <NavigationProperty Name="UserData1" Relationship="AlanCartModel.FK_OrderData_UserData1" FromRole="OrderData" ToRole="UserData" />
           <NavigationProperty Name="OrderItem" Relationship="AlanCartModel.FK_OrderItem_OrderData" FromRole="OrderData" ToRole="OrderItem" />
+          <Property Name="IsBuyerConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="IsSellerClosed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderItem">
           <Key>
@@ -363,6 +379,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -406,6 +432,8 @@
           <EntitySetMapping Name="OrderData">
             <EntityTypeMapping TypeName="AlanCartModel.OrderData">
               <MappingFragment StoreEntitySet="OrderData">
+                <ScalarProperty Name="IsSellerClosed" ColumnName="IsSellerClosed" />
+                <ScalarProperty Name="IsBuyerConfirmed" ColumnName="IsBuyerConfirmed" />
                 <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
@@ -422,6 +450,17 @@
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AlanCartModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

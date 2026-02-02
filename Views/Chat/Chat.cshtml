@@ -23,6 +23,31 @@
         <input type="text" name="name" value="" />
         <button type="button">></button>
     </div>
+    <hr />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+    <input id="msg"/>
+    <button id="send">Send</button>
+    <ul id="chat"></ul>
+
+    <script>
+        var hub = $.connection.chatHub;
+
+        hub.client.receive = function (user, message) {
+            $("#chat").append(
+                $("<li/>").text(user + ":" + message)
+            );
+        };
+
+        $.connection.hub.start().done(function () {
+            $("#send").click(function () {
+                hub.server.send($("#msg").val());
+                $("#msg").val("");
+            });
+        });
+    </script>
 </body>
 
 @{ 

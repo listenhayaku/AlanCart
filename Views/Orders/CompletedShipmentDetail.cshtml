@@ -1,0 +1,39 @@
+﻿@model List<AlanCart.Models.OrderItem> 
+@{
+    ViewBag.Title = "CompletedShipmentDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@AlanCart.Resources.Lang.CompletedShipmentDetail</h2>
+
+<div class="row">
+    @foreach(AlanCart.Models.OrderItem orderitem in Model)
+            {
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                @orderitem.Id
+                            </div>
+                            <div>
+                                @orderitem.ProductId
+                            </div>
+                            <div>
+                                <img src="@Url.Content(orderitem.ProductData.ImgUrl)"/>
+                            </div>
+                            <div>
+                                @orderitem.ProductData.Productname
+                            </div>
+                            <div>
+                                @orderitem.ProductData.Price
+                            </div>
+                            <div>
+                                @orderitem.Stock
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+</div>
+

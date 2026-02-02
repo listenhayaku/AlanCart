@@ -30,7 +30,15 @@
                                     @:還在炸
                                     break;
                                 case 1:
-                                    @:可以領了
+                                    if (od.IsBuyerConfirmed == false)
+                                    {
+                                        @:可以領了
+                                        <a href="@Url.Action("BuyerConfirm","Orders",new { strorderdataid = od.Id})" class="btn btn-primary">@AlanCart.Resources.Lang.BuyerConfirm</a>
+                                    }
+                                    else
+                                    {
+                                        @:己取，待賣家結單
+                                    }
                                     break;
                                 case 2:
                                     @:己結單
@@ -38,7 +46,7 @@
                                 default:
                                     @:what?
                                     break;
-                                }
+                            }
                         </td>
                     </tr>
                 </table>

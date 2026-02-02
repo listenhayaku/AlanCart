@@ -56,12 +56,14 @@
                         @if (Convert.ToInt32(Session["Role"]) == (int)UserRole.Administrator)
                         {
                             <li>@Html.ActionLink("PendingShipments", "PendingShipments", "Orders")</li>
+                            <li>@Html.ActionLink(AlanCart.Resources.Lang.CompletedShipments, "CompletedShipments", "Orders")</li>
                             <li>@Html.ActionLink("NewProduct", "NewProduct", "Products")</li>
                             <li>@Html.ActionLink("MyProducts", "MyProducts", "Products")</li>
 
                         }
                         <li>@Html.ActionLink(AlanCart.Resources.Lang.MyCart, "MyCart", "Products")</li>
                         <li>@Html.ActionLink(AlanCart.Resources.Lang.MyOrders, "MyOrders", "Orders")</li>
+                        <li>@Html.ActionLink(AlanCart.Resources.Lang.OrderHistories, "OrderHistories", "Orders")</li>
                         <li>@Html.ActionLink(AlanCart.Resources.Lang.Contact, "Contact", "Chat")</li>
 
                     </ul>

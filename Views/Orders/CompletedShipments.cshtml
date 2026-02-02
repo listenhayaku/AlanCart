@@ -1,0 +1,23 @@
+﻿@model List<AlanCart.Models.OrderData>
+@{
+    ViewBag.Title = "CompletedShipments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@AlanCart.Resources.Lang.CompletedShipments</h2>
+
+<div class="row">
+    @foreach(AlanCart.Models.OrderData orderdata in Model)
+            {
+                <a href="@Url.Action("CompletedShipmentDetail","Orders",new {strorderdataid = orderdata.Id})">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                @orderdata.Id
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+</div>
+

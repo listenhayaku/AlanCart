@@ -34,6 +34,7 @@
       <End Role="UserData" EntitySet="UserData" />
       <End Role="ProductData" EntitySet="ProductData" />
     </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="AlanCartModel.sysdiagrams" />
   </EntityContainer>
   <EntityType Name="UserData">
     <Key>
@@ -87,6 +88,8 @@
     <NavigationProperty Name="UserData" Relationship="AlanCartModel.FK_OrderData_UserData" FromRole="OrderData" ToRole="UserData" />
     <NavigationProperty Name="UserData1" Relationship="AlanCartModel.FK_OrderData_UserData1" FromRole="OrderData" ToRole="UserData" />
     <NavigationProperty Name="OrderItem" Relationship="AlanCartModel.FK_OrderItem_OrderData" FromRole="OrderData" ToRole="OrderItem" />
+    <Property Name="IsBuyerConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="IsSellerClosed" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="OrderItem">
     <Key>
@@ -184,4 +187,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
 </Schema>

@@ -123,6 +123,15 @@
   <data name="Buyer" xml:space="preserve">
     <value>Buyer</value>
   </data>
+  <data name="BuyerConfirm" xml:space="preserve">
+    <value>BuyerConfirm</value>
+  </data>
+  <data name="CompletedShipmentDetail" xml:space="preserve">
+    <value>CompletedShipmentDetail</value>
+  </data>
+  <data name="CompletedShipments" xml:space="preserve">
+    <value>CompletedShipments</value>
+  </data>
   <data name="Config" xml:space="preserve">
     <value>Config</value>
   </data>
@@ -140,6 +149,12 @@
   </data>
   <data name="MyOrders" xml:space="preserve">
     <value>MyOrders</value>
+  </data>
+  <data name="OrderHistories" xml:space="preserve">
+    <value>OrderHistories</value>
+  </data>
+  <data name="OrderHistoryDetail" xml:space="preserve">
+    <value>OrderHistoryDetail</value>
   </data>
   <data name="OrderStatus" xml:space="preserve">
     <value>OrderStatus</value>
