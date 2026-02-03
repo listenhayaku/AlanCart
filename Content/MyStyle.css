@@ -1,5 +1,4 @@
 ﻿*{
-    
 }
 
 body{
@@ -39,7 +38,6 @@ body img {
 
 body.chatbox{
     width: 100%;
-    height: 100%;
     text-align:center;
     margin: unset;
     box-sizing:border-box;
@@ -50,15 +48,22 @@ body.chatbox div{
 }
 
 body.chatbox .chatbox-title{
-    background-color: purple;
+    background-color: #fa69f7;
+    height: 3rem;
 }
 
 body.chatbox .chatbox-container{
     display: flex;
 }
+
+body.chatbox .chatbox-content{
+    height: 80%;
+    overflow: scroll;
+}
+
 body.chatbox input{
     width: 100%;
-    background-color: gray;
+    background-color: #c2c2c2;
     border: unset;
 }
 
@@ -69,4 +74,16 @@ body.chatbox button{
 
 body.chatbox button:hover{
     background-color: #aea3a3;
+}
+
+body.chatbox input.chatbox-input{
+    height: 3rem;
+}
+
+body.chatbox input{
+    outline: none;
+}
+
+body.chatbox button.sendbutton{
+    width: 3rem;
 }

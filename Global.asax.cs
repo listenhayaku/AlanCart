@@ -25,6 +25,7 @@ namespace AlanCart
 
             //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             //Thread.CurrentThread.CurrentUICulture= new CultureInfo("en-US");
+
         }
 
         protected void Application_BeginRequest()

@@ -135,3 +135,6 @@ D:\Language\Projects\AlanCart\bin\Microsoft.Owin.Security.dll
 D:\Language\Projects\AlanCart\bin\Microsoft.AspNet.SignalR.Core.pdb
 D:\Language\Projects\AlanCart\bin\Microsoft.AspNet.SignalR.Core.xml
 D:\Language\Projects\AlanCart\bin\Microsoft.Owin.Security.xml
+D:\Language\Projects\AlanCart\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\Language\Projects\AlanCart\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
+D:\Language\Projects\AlanCart\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

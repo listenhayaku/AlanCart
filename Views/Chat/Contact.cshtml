@@ -9,7 +9,7 @@
 <div class="row">
     @foreach (AlanCart.Models.UserData userdata in Model)
     {
-        <a href="@Url.Action("Chat","Chat",new {with=0})">
+        <a href="@Url.Action("Chat","Chat",new {with=userdata.Id})">
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg3">
                 <div class="panel panel-default">
                     <div class="panel-body">

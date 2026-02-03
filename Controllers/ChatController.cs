@@ -23,9 +23,15 @@ namespace AlanCart.Controllers
                 return View(listud);
             }
         }
-        public ActionResult Chat()
+        public ActionResult Chat(string with)
         {
-            return View();
+            if (!Services.Security.IsValidSession(Session)) return RedirectToAction("Logout", "Register");
+            if (!int.TryParse(with, out int userid)) return RedirectToAction("Contact");
+            using(Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                Models.UserData userdata = (from s in db.UserData where s.Id == userid select s).FirstOrDefault();
+                return View(userdata);
+            }
         }
     }
 }

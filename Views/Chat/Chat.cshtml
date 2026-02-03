@@ -1,4 +1,4 @@
-﻿
+﻿@model AlanCart.Models.UserData
 @{
     Layout = null;
 }
@@ -14,39 +14,50 @@
 </head>
 <body class="chatbox">
     <div class="chatbox-title">
-        Chat
+        @Model.Username
     </div>
-    <div>
-        content
+    <div id="chatbox-content" class="chatbox-content">
     </div>
     <div class="chatbox-container">
-        <input type="text" name="name" value="" />
-        <button type="button">></button>
+        <input id="msginput" type="text" name="name" value="" class="chatbox-input"/>
+        <button id="sendbutton" type="button" class="sendbutton">></button>
     </div>
     <hr />
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="/signalr/hubs"></script>
-
-    <input id="msg"/>
-    <button id="send">Send</button>
-    <ul id="chat"></ul>
 
     <script>
         var hub = $.connection.chatHub;
 
         hub.client.receive = function (user, message) {
-            $("#chat").append(
-                $("<li/>").text(user + ":" + message)
+            $("#chatbox-content").append(
+                $("<div/>").text(user + ":" + message)
             );
+            //alert(message);
         };
-
+        //chatgp給的 :0
         $.connection.hub.start().done(function () {
-            $("#send").click(function () {
-                hub.server.send($("#msg").val());
-                $("#msg").val("");
+            console.log("SignalR connected");
+            $("#sendbutton").click(function () {
+                sendMessage();
+            });
+            hub.server.send("test from client");
+            $("#msginput").keydown(function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    sendMessage();
+                }
             });
         });
+
+        function sendMessage() {
+            var msg = $("#msginput").val().trim();
+            if (msg === "") return;
+            hub.server.send(msg);
+            $("#msginput").val("");
+        }
     </script>
 </body>
 
