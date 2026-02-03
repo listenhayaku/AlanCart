@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace AlanCart.Controllers
 {
@@ -30,6 +31,8 @@ namespace AlanCart.Controllers
                 Session["Username"] = ud.Username;
                 Session["Nickname"] = ud.Nickname;
                 Session["Role"] = ud.Role;
+                //我實用asp.net的authentication只是為了給signalr用
+                FormsAuthentication.SetAuthCookie(ud.Id.ToString(), false);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -60,6 +63,7 @@ namespace AlanCart.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
+            FormsAuthentication.SignOut();
             return RedirectToAction("SignIn", "Register");
         }
         public ActionResult UpdatePassword(string struserid)    //如果沒有帶參數就是本人，如果有，就是admin改別人的密碼
