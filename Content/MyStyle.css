@@ -87,3 +87,23 @@ body.chatbox input{
 body.chatbox button.sendbutton{
     width: 3rem;
 }
+
+body.chatbox .chatbox-childdiv{
+    display:flex;
+}
+
+body.chatbox .chatbox-usernametag{
+    width: unset;
+}
+
+body.chatbox .chatbox-message{
+    width: unset;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #c2c2c2;
+    font-size: 2rem;
+}
+
+body.chatbox .send{
+    justify-content: flex-end;
+}

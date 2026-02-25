@@ -229,6 +229,15 @@
     <Compile Include="Models\CartOfUser.cs">
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChatMessage.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Conversation.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConversationMember.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OrderData.cs">
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
@@ -239,7 +248,10 @@
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductData.Custom.cs" />
-    <Compile Include="Models\sysdiagrams.cs">
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>AlanCartEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>AlanCartEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserData.cs">

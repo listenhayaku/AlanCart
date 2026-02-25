@@ -30,33 +30,87 @@
 
     <script>
         var hub = $.connection.chatHub;
+        var _conversationid;
 
-        hub.client.receive = function (user, message) {
+        /*hub.client.receive = function (user, message) {
             $("#chatbox-content").append(
                 $("<div/>").text(user + ":" + message)
             );
             //alert(message);
-        };
+        };*/
+
+        hub.client.receive = function (user, message) {
+            console.log("(debug)[receive]start");
+            var paraentdiv = document.createElement("div");
+            var childdiv1 = document.createElement("div");
+            var childdiv2 = document.createElement("div");
+            var usernamediv = document.createElement("div");
+            var messagediv = document.createElement("div");
+            usernamediv.textContent = user;
+            messagediv.textContent = message;
+            usernamediv.classList = "chatbox-usernametag";
+            messagediv.classList = "chatbox-message";
+            childdiv1.classList = "chatbox-childdiv";
+            childdiv2.classList = "chatbox-childdiv";
+            childdiv1.appendChild(usernamediv);
+            childdiv2.appendChild(messagediv);
+            paraentdiv.appendChild(childdiv1);
+            paraentdiv.appendChild(childdiv2);
+            document.getElementById("chatbox-content").appendChild(paraentdiv);
+        }
+
+        hub.client.receiveConversationId = function (conversationid) {
+            _conversationid = conversationid;
+            console.log("(debug)[receiveConversationId]:" + conversationid);
+        }
         //chatgp給的 :0
         $.connection.hub.start().done(function () {
+            hub.server.startPrivateConversation(window.location.search.replace('?with=', ''));
+
             console.log("SignalR connected");
             $("#sendbutton").click(function () {
-                sendMessage();
+                sendTo();
             });
-            hub.server.send("test from client");
             $("#msginput").keydown(function (e) {
                 if (e.key === "Enter") {
                     e.preventDefault();
-                    sendMessage();
+                    sendTo();
                 }
             });
         });
 
-        function sendMessage() {
+        /*function sendMessage() {
             var msg = $("#msginput").val().trim();
             if (msg === "") return;
-            hub.server.send(msg);
+            hub.server.sendTo(msg);
             $("#msginput").val("");
+        }*/
+
+        function sendTo() {
+            var msg = $("#msginput").val().trim();
+            if (msg === "") return;
+            hub.server.sendTo(_conversationid,msg);
+            $("#msginput").val("");
+
+            var message = msg;
+            var paraentdiv = document.createElement("div");
+            var childdiv1 = document.createElement("div");
+            var childdiv2 = document.createElement("div");
+            var usernamediv = document.createElement("div");
+            var messagediv = document.createElement("div");
+            usernamediv.textContent = "me";
+            messagediv.textContent = message;
+            usernamediv.classList = "chatbox-usernametag";
+            messagediv.classList = "chatbox-message";
+            childdiv1.classList = "chatbox-childdiv";
+            childdiv1.classList.add("send");
+            childdiv2.classList = "chatbox-childdiv";
+            childdiv2.classList.add("send");
+            childdiv1.appendChild(usernamediv);
+            childdiv2.appendChild(messagediv);
+            paraentdiv.appendChild(childdiv1);
+            paraentdiv.appendChild(childdiv2);
+            document.getElementById("chatbox-content").appendChild(paraentdiv);
         }
     </script>
 </body>

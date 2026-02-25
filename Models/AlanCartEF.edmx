@@ -14,6 +14,32 @@
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Stock" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ChatMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConversationId" Type="int" Nullable="false" />
+          <Property Name="SenderId" Type="int" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conversation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConversationMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConversationId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsPrivateMessage" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="OrderData">
           <Key>
             <PropertyRef Name="Id" />
@@ -48,16 +74,6 @@
           <Property Name="Available" Type="int" Nullable="false" />
           <Property Name="ImgUrl" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="UserData">
           <Key>
             <PropertyRef Name="Id" />
@@ -88,6 +104,42 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CartOfUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChatMessage_Conversation1">
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
+          <End Role="ChatMessage" Type="Self.ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="ConversationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConversationMember_Conversation">
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
+          <End Role="ConversationMember" Type="Self.ConversationMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ConversationMember">
+              <PropertyRef Name="ConversationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConversationMember_UserData">
+          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+          <End Role="ConversationMember" Type="Self.ConversationMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ConversationMember">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -152,12 +204,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SenderId_UserData">
+          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+          <End Role="ChatMessage" Type="Self.ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AlanCartModelStoreContainer">
           <EntitySet Name="CartOfUser" EntityType="Self.CartOfUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatMessage" EntityType="Self.ChatMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conversation" EntityType="Self.Conversation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConversationMember" EntityType="Self.ConversationMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderData" EntityType="Self.OrderData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductData" EntityType="Self.ProductData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CartOfUser_ProductData" Association="Self.FK_CartOfUser_ProductData">
             <End Role="ProductData" EntitySet="ProductData" />
@@ -166,6 +263,18 @@
           <AssociationSet Name="FK_CartOfUser_UserData" Association="Self.FK_CartOfUser_UserData">
             <End Role="UserData" EntitySet="UserData" />
             <End Role="CartOfUser" EntitySet="CartOfUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChatMessage_Conversation1" Association="Self.FK_ChatMessage_Conversation1">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConversationMember_Conversation" Association="Self.FK_ConversationMember_Conversation">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="ConversationMember" EntitySet="ConversationMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConversationMember_UserData" Association="Self.FK_ConversationMember_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="ConversationMember" EntitySet="ConversationMember" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderData_UserData" Association="Self.FK_OrderData_UserData">
             <End Role="UserData" EntitySet="UserData" />
@@ -186,6 +295,10 @@
           <AssociationSet Name="FK_ProductData_UserData" Association="Self.FK_ProductData_UserData">
             <End Role="UserData" EntitySet="UserData" />
             <End Role="ProductData" EntitySet="ProductData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SenderId_UserData" Association="Self.FK_SenderId_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -226,7 +339,55 @@
             <End Role="UserData" EntitySet="UserData" />
             <End Role="ProductData" EntitySet="ProductData" />
           </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="AlanCartModel.sysdiagrams" />
+          <EntitySet Name="ChatMessage" EntityType="AlanCartModel.ChatMessage" />
+          <AssociationSet Name="FK_SenderId_UserData" Association="AlanCartModel.FK_SenderId_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(AlanCartModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(AlanCartModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Conversation" EntityType="AlanCartModel.Conversation" />
+          <EntitySet Name="ConversationMember" EntityType="AlanCartModel.ConversationMember" />
+          <AssociationSet Name="FK_ChatMessage_Conversation1" Association="AlanCartModel.FK_ChatMessage_Conversation1">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConversationMember_Conversation" Association="AlanCartModel.FK_ConversationMember_Conversation">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="ConversationMember" EntitySet="ConversationMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConversationMember_UserData" Association="AlanCartModel.FK_ConversationMember_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="ConversationMember" EntitySet="ConversationMember" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserData">
           <Key>
@@ -241,6 +402,8 @@
           <NavigationProperty Name="OrderData" Relationship="AlanCartModel.FK_OrderData_UserData" FromRole="UserData" ToRole="OrderData" />
           <NavigationProperty Name="OrderData1" Relationship="AlanCartModel.FK_OrderData_UserData1" FromRole="UserData" ToRole="OrderData" />
           <NavigationProperty Name="ProductData" Relationship="AlanCartModel.FK_ProductData_UserData" FromRole="UserData" ToRole="ProductData" />
+          <NavigationProperty Name="ChatMessage" Relationship="AlanCartModel.FK_SenderId_UserData" FromRole="UserData" ToRole="ChatMessage" />
+          <NavigationProperty Name="ConversationMember" Relationship="AlanCartModel.FK_ConversationMember_UserData" FromRole="UserData" ToRole="ConversationMember" />
         </EntityType>
         <EntityType Name="ProductData">
           <Key>
@@ -379,16 +542,97 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="ChatMessage">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConversationId" Type="Int32" Nullable="false" />
+          <Property Name="SenderId" Type="Int32" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="UserData" Relationship="AlanCartModel.FK_SenderId_UserData" FromRole="ChatMessage" ToRole="UserData" />
+          <NavigationProperty Name="Conversation" Relationship="AlanCartModel.FK_ChatMessage_Conversation1" FromRole="ChatMessage" ToRole="Conversation" />
         </EntityType>
+        <Association Name="FK_SenderId_UserData">
+          <End Type="AlanCartModel.UserData" Role="UserData" Multiplicity="1" />
+          <End Type="AlanCartModel.ChatMessage" Role="ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Conversation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ChatMessage" Relationship="AlanCartModel.FK_ChatMessage_Conversation1" FromRole="Conversation" ToRole="ChatMessage" />
+          <NavigationProperty Name="ConversationMember" Relationship="AlanCartModel.FK_ConversationMember_Conversation" FromRole="Conversation" ToRole="ConversationMember" />
+        </EntityType>
+        <EntityType Name="ConversationMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConversationId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Conversation" Relationship="AlanCartModel.FK_ConversationMember_Conversation" FromRole="ConversationMember" ToRole="Conversation" />
+          <NavigationProperty Name="UserData" Relationship="AlanCartModel.FK_ConversationMember_UserData" FromRole="ConversationMember" ToRole="UserData" />
+          <Property Name="IsPrivateMessage" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ChatMessage_Conversation1">
+          <End Type="AlanCartModel.Conversation" Role="Conversation" Multiplicity="1" />
+          <End Type="AlanCartModel.ChatMessage" Role="ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="ConversationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConversationMember_Conversation">
+          <End Type="AlanCartModel.Conversation" Role="Conversation" Multiplicity="1" />
+          <End Type="AlanCartModel.ConversationMember" Role="ConversationMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ConversationMember">
+              <PropertyRef Name="ConversationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConversationMember_UserData">
+          <End Type="AlanCartModel.UserData" Role="UserData" Multiplicity="1" />
+          <End Type="AlanCartModel.ConversationMember" Role="ConversationMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ConversationMember">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -453,14 +697,56 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="AlanCartModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="ChatMessage">
+            <EntityTypeMapping TypeName="AlanCartModel.ChatMessage">
+              <MappingFragment StoreEntitySet="ChatMessage">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="ConversationId" ColumnName="ConversationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="AlanCartModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="AlanCartModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="AlanCartModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="AlanCartModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlanCartModel.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="AlanCartModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AlanCartModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="AlanCartModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="AlanCartModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Conversation">
+            <EntityTypeMapping TypeName="AlanCartModel.Conversation">
+              <MappingFragment StoreEntitySet="Conversation">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConversationMember">
+            <EntityTypeMapping TypeName="AlanCartModel.ConversationMember">
+              <MappingFragment StoreEntitySet="ConversationMember">
+                <ScalarProperty Name="IsPrivateMessage" ColumnName="IsPrivateMessage" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ConversationId" ColumnName="ConversationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

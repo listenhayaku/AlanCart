@@ -12,28 +12,17 @@ namespace AlanCart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserData
+    public partial class Conversation
     {
-        public UserData()
+        public Conversation()
         {
-            this.CartOfUser = new HashSet<CartOfUser>();
-            this.OrderData = new HashSet<OrderData>();
-            this.OrderData1 = new HashSet<OrderData>();
-            this.ProductData = new HashSet<ProductData>();
             this.ChatMessage = new HashSet<ChatMessage>();
             this.ConversationMember = new HashSet<ConversationMember>();
         }
     
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Nickname { get; set; }
-        public int Role { get; set; }
+        public System.DateTime CreatedAt { get; set; }
     
-        public virtual ICollection<CartOfUser> CartOfUser { get; set; }
-        public virtual ICollection<OrderData> OrderData { get; set; }
-        public virtual ICollection<OrderData> OrderData1 { get; set; }
-        public virtual ICollection<ProductData> ProductData { get; set; }
         public virtual ICollection<ChatMessage> ChatMessage { get; set; }
         public virtual ICollection<ConversationMember> ConversationMember { get; set; }
     }
