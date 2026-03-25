@@ -112,6 +112,28 @@
             paraentdiv.appendChild(childdiv2);
             document.getElementById("chatbox-content").appendChild(paraentdiv);
         }
+        //更新的發送用這個，更新的接收直接用receive
+        hub.client.updateHistory = function(message) {
+            console.log("(debug)[updateHistory]start:"+message);
+            var paraentdiv = document.createElement("div");
+            var childdiv1 = document.createElement("div");
+            var childdiv2 = document.createElement("div");
+            var usernamediv = document.createElement("div");
+            var messagediv = document.createElement("div");
+            usernamediv.textContent = "me";
+            messagediv.textContent = message;
+            usernamediv.classList = "chatbox-usernametag";
+            messagediv.classList = "chatbox-message";
+            childdiv1.classList = "chatbox-childdiv";
+            childdiv1.classList.add("send");
+            childdiv2.classList = "chatbox-childdiv";
+            childdiv2.classList.add("send");
+            childdiv1.appendChild(usernamediv);
+            childdiv2.appendChild(messagediv);
+            paraentdiv.appendChild(childdiv1);
+            paraentdiv.appendChild(childdiv2);
+            document.getElementById("chatbox-content").appendChild(paraentdiv);
+        }
     </script>
 </body>
 

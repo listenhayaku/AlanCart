@@ -83,8 +83,29 @@ namespace AlanCart.Hubs
                 else
                 {
                     System.Diagnostics.Debug.WriteLine("found id = "+ conversationid);
+                    
                 }
                 Clients.Caller.receiveConversationId(conversationid);
+                CheckHistory(conversationid,userid);
+            }
+        }
+
+        public void CheckHistory(int conversationid,int userid)
+        {
+            using (Models.AlanCartEntities db = new Models.AlanCartEntities())
+            {
+                List<Models.ChatMessage> listChatMessage = (from s in db.ChatMessage where s.ConversationId == conversationid select s).ToList();
+                foreach(var chatMessage in listChatMessage)
+                {
+                    if(chatMessage.SenderId == userid)
+                    {
+                        Clients.Caller.updateHistory(chatMessage.Message);
+                    }
+                    else
+                    {
+                        Clients.Caller.receive(chatMessage.UserData.Nickname,chatMessage.Message);
+                    }
+                }
             }
         }
         /*public void Send(string message)
